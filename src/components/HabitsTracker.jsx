@@ -40,16 +40,16 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
       {/* Header */}
       <div>
         <h2 className="text-xl font-bold tracking-tight mb-0.5 dark:text-white">Hábitos</h2>
-        <p className="text-xs text-slate-400 dark:text-slate-300">Tachá lo que completaste hoy</p>
+        <p className="text-xs text-slate-400 dark:text-white font-medium">Tachá lo que completaste hoy</p>
       </div>
 
       {/* Legend - Fixed Colors */}
       <div className="flex flex-wrap gap-x-4 gap-y-2 px-1 py-1 border-b border-border/50">
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-100">
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#38bdf8' }}></span>
           Limpieza
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-100">
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#f97316' }}></span>
           Deporte
         </div>
@@ -172,7 +172,7 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
                 "px-2 py-0.5 rounded-full text-[10px] font-bold border transition-all uppercase tracking-tight flex items-center gap-1.5",
                 selectedCategory === cat.key 
                   ? "bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500 text-slate-900 dark:text-white scale-105" 
-                  : "bg-transparent border-transparent text-slate-400 hover:text-slate-500"
+                  : "bg-transparent border-transparent text-slate-400 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white"
               )}
             >
               <span className="w-2 h-2 rounded-full shadow-sm" style={{ backgroundColor: cat.color }} />

@@ -39,17 +39,17 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
     <div className="glass-card p-4 md:p-5 flex flex-col gap-4 h-full">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold tracking-tight mb-0.5">Hábitos</h2>
-        <p className="text-xs text-slate-400">Tachá lo que completaste hoy</p>
+        <h2 className="text-xl font-bold tracking-tight mb-0.5 dark:text-white">Hábitos</h2>
+        <p className="text-xs text-slate-400 dark:text-slate-300">Tachá lo que completaste hoy</p>
       </div>
 
       {/* Legend - Fixed Colors */}
       <div className="flex flex-wrap gap-x-4 gap-y-2 px-1 py-1 border-b border-border/50">
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#38bdf8' }}></span>
           Limpieza
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-300">
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#f97316' }}></span>
           Deporte
         </div>
@@ -120,7 +120,7 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
                   "flex-1 text-sm font-medium leading-snug transition-colors select-none",
                   habit.done 
                     ? 'text-slate-400 line-through' 
-                    : darkMode ? 'text-slate-200' : 'text-slate-800'
+                    : darkMode ? 'text-white' : 'text-slate-800'
                 )}
               >
                 {habit.type === 'generated' && (

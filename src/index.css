@@ -3,10 +3,14 @@
 @theme {
   --color-slate-950: #020617;
   --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
   --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
   --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
   --color-amber-500: #f59e0b;
   --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

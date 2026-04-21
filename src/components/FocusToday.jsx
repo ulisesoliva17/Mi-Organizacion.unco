@@ -64,11 +64,11 @@ export default function FocusToday({ data, onEventClick }) {
 
   return (
     <div className="glass-card p-6 h-full flex flex-col">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="p-2 bg-foreground text-background rounded-lg">
-          <Calendar className="w-5 h-5" />
+      <div className="flex flex-col items-center justify-center gap-2 mb-8 text-center">
+        <div className="p-3 bg-foreground text-background rounded-full shadow-md">
+          <Calendar className="w-6 h-6" />
         </div>
-        <h2 className="text-xl font-semibold tracking-tight">Foco Hoy</h2>
+        <h2 className="text-2xl font-bold tracking-tight uppercase">Foco Hoy</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 space-y-6">

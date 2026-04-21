@@ -2,11 +2,11 @@ export const initialData = {
   config: {
     fecha_inicio: "2026-04-20",
     materias: {
-      MPN: { nombre: "Modelado de Procesos de Negocios", color: "violet-500" },
-      SI: { nombre: "Sistemas de Información I", color: "blue-500" },
-      PCP: { nombre: "Planificación y Control de Proyectos", color: "emerald-500" },
+      MPN: { nombre: "Modelado de Procesos de Negocios", color: "violet-600" },
+      SI: { nombre: "Sistemas de Información I", color: "blue-600" },
+      PCP: { nombre: "Planificación y Control de Proyectos", color: "emerald-600" },
       ER: { nombre: "Especificación de Requerimientos", color: "amber-500" },
-      SO: { nombre: "Sistemas Operativos", color: "red-500" }
+      SO: { nombre: "Sistemas Operativos", color: "red-600" }
     }
   },
   horarios_fijos: [

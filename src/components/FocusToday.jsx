@@ -65,7 +65,7 @@ export default function FocusToday({ data, darkMode, onEventClick }) {
   };
 
   return (
-    <div className="glass-card p-6 h-full flex flex-col">
+    <div className="glass-card p-4 md:p-6 h-full flex flex-col">
       <div className="flex flex-col items-center justify-center gap-2 mb-8 text-center">
         <div className="p-3 bg-foreground text-background rounded-full shadow-md">
           <Calendar className="w-6 h-6" />

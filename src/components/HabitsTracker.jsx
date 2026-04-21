@@ -36,7 +36,7 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
   };
 
   return (
-    <div className="glass-card p-5 flex flex-col gap-4 h-full">
+    <div className="glass-card p-4 md:p-5 flex flex-col gap-4 h-full">
       {/* Header */}
       <div>
         <h2 className="text-xl font-bold tracking-tight mb-0.5">Hábitos</h2>

@@ -1,20 +1,35 @@
 import { useState, useEffect } from 'react';
 import { initialData } from '../data/initialData';
 
+// Migrate old habitos format (plain object) to new array format
+function migrateHabitos(habitos) {
+  if (Array.isArray(habitos)) return habitos;
+  // Old format: { "Deporte": false, "Limpieza del día": false }
+  return Object.entries(habitos).map(([name, done]) => ({
+    id: name,
+    name,
+    done,
+    type: 'manual',
+  }));
+}
+
+function getInitialData() {
+  const stored = localStorage.getItem('uncoApp_data');
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    return { ...parsed, habitos: migrateHabitos(parsed.habitos) };
+  }
+  const base = { ...initialData };
+  base.habitos = migrateHabitos(base.habitos);
+  return base;
+}
+
 export function useAppStore() {
-  const [data, setData] = useState(() => {
-    const stored = localStorage.getItem('uncoApp_data');
-    if (stored) {
-      return JSON.parse(stored);
-    }
-    return initialData;
-  });
+  const [data, setData] = useState(getInitialData);
 
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem('uncoApp_theme');
-    if (stored) {
-      return stored === 'dark';
-    }
+    if (stored) return stored === 'dark';
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
@@ -33,23 +48,51 @@ export function useAppStore() {
 
   const toggleDarkMode = () => setDarkMode(prev => !prev);
 
-  const toggleHabit = (habitName) => {
+  // Toggle habit done state by id
+  const toggleHabit = (id) => {
     setData(prev => ({
       ...prev,
-      habitos: {
-        ...prev.habitos,
-        [habitName]: !prev.habitos[habitName]
-      }
+      habitos: prev.habitos.map(h => h.id === id ? { ...h, done: !h.done } : h),
+    }));
+  };
+
+  // Add a new manual habit
+  const addHabit = (name) => {
+    const id = `manual_${Date.now()}`;
+    setData(prev => ({
+      ...prev,
+      habitos: [...prev.habitos, { id, name, done: false, type: 'manual' }],
+    }));
+  };
+
+  // Add a generated 10-min task
+  const addGeneratedTask = (name) => {
+    const id = `gen_${Date.now()}`;
+    setData(prev => ({
+      ...prev,
+      habitos: [...prev.habitos, { id, name, done: false, type: 'generated' }],
+    }));
+  };
+
+  // Remove a habit by id
+  const removeHabit = (id) => {
+    setData(prev => ({
+      ...prev,
+      habitos: prev.habitos.filter(h => h.id !== id),
     }));
   };
 
   const updateHito = (oldHito, newHito) => {
     setData(prev => {
-      const isExisting = prev.hitos.find(h => h.fecha === oldHito.fecha && h.desc === oldHito.desc && h.mat === oldHito.mat);
+      const isExisting = prev.hitos.find(
+        h => h.fecha === oldHito.fecha && h.desc === oldHito.desc && h.mat === oldHito.mat
+      );
       let newHitos = [...prev.hitos];
       if (isExisting) {
-        newHitos = newHitos.map(h => 
-          (h.fecha === oldHito.fecha && h.desc === oldHito.desc && h.mat === oldHito.mat) ? newHito : h
+        newHitos = newHitos.map(h =>
+          h.fecha === oldHito.fecha && h.desc === oldHito.desc && h.mat === oldHito.mat
+            ? newHito
+            : h
         );
       } else {
         newHitos.push(newHito);
@@ -61,7 +104,9 @@ export function useAppStore() {
   const deleteHito = (hitoToDelete) => {
     setData(prev => ({
       ...prev,
-      hitos: prev.hitos.filter(h => !(h.fecha === hitoToDelete.fecha && h.desc === hitoToDelete.desc && h.mat === hitoToDelete.mat))
+      hitos: prev.hitos.filter(
+        h => !(h.fecha === hitoToDelete.fecha && h.desc === hitoToDelete.desc && h.mat === hitoToDelete.mat)
+      ),
     }));
   };
 
@@ -70,7 +115,10 @@ export function useAppStore() {
     darkMode,
     toggleDarkMode,
     toggleHabit,
+    addHabit,
+    addGeneratedTask,
+    removeHabit,
     updateHito,
-    deleteHito
+    deleteHito,
   };
 }

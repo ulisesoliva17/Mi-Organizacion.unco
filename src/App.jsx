@@ -7,7 +7,7 @@ import TaskEditModal from './components/TaskEditModal';
 import { Moon, Sun, BookOpen } from 'lucide-react';
 
 function App() {
-  const { data, darkMode, toggleDarkMode, toggleHabit, updateHito, deleteHito } = useAppStore();
+  const { data, darkMode, toggleDarkMode, toggleHabit, addHabit, addGeneratedTask, removeHabit, updateHito, deleteHito } = useAppStore();
   const [editingEvent, setEditingEvent] = useState(null);
 
   const handleEventClick = (event) => {
@@ -59,7 +59,13 @@ function App() {
             
             {/* Sidebar Angosta (Left Column) */}
             <div className="w-full lg:w-1/4 xl:w-1/5 shrink-0 flex flex-col gap-6">
-              <HabitsTracker data={data} onToggleHabit={toggleHabit} />
+              <HabitsTracker
+                data={data}
+                onToggleHabit={toggleHabit}
+                onAddHabit={addHabit}
+                onAddGeneratedTask={addGeneratedTask}
+                onRemoveHabit={removeHabit}
+              />
             </div>
 
             {/* Foco Hoy Vertical (Center/Right Column) */}

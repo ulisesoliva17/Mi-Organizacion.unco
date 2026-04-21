@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { getEventsForDate, formatDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
+import { getEventsForDate, formatDateEs, getMateriaHex } from '../utils/dateUtils';
 import { addDays, startOfDay } from 'date-fns';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 
-export default function FocusToday({ data, darkMode, onEventClick }) {
+export default function FocusToday({ data, onEventClick }) {
   const todayDate = startOfDay(new Date());
   // The user requirement says: "filtrar y mostrar solo eventos con fecha igual o posterior al 20/04/2026."
   const minDate = new Date(`${data.config.fecha_inicio}T00:00:00`);
@@ -21,7 +21,6 @@ export default function FocusToday({ data, darkMode, onEventClick }) {
     return (
       <div className="space-y-3">
         {events.map((ev, i) => {
-          const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
           return (
             <div 
               key={i} 
@@ -34,10 +33,7 @@ export default function FocusToday({ data, darkMode, onEventClick }) {
               />
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <h4 
-                    className="font-bold text-sm transition-colors"
-                    style={{ color: styles.text }}
-                  >
+                  <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 transition-colors">
                     {ev.mat}
                   </h4>
                   {ev.hora && (

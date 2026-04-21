@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { CheckCircle2, Circle, Plus, Trash2, Sparkles, Timer, ChevronDown } from 'lucide-react';
+import { CheckCircle2, Circle, Plus, Trash2, Sparkles, Timer } from 'lucide-react';
 import { getRandomTask } from '../data/taskGenerator';
-import { getCategoryHex, HABIT_CATEGORIES } from '../utils/dateUtils';
+import { getCategoryHex } from '../utils/dateUtils';
 import clsx from 'clsx';
 
-export default function HabitsTracker({ data, onToggleHabit, onAddHabit, onAddGeneratedTask, onRemoveHabit }) {
+export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabit, onAddGeneratedTask, onRemoveHabit }) {
   const habitos = Array.isArray(data.habitos) ? data.habitos : [];
   const [newTaskName, setNewTaskName] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('general');
@@ -16,7 +16,7 @@ export default function HabitsTracker({ data, onToggleHabit, onAddHabit, onAddGe
     { key: 'general', name: 'General', color: '#64748b' },
     { key: 'limpieza', name: 'Limpieza', color: '#38bdf8' },
     { key: 'deporte', name: 'Deporte', color: '#f97316' },
-    ...subjects.map(s => ({ key: s, name: s, color: getCategoryHex(s) }))
+    ...subjects.map(s => ({ key: s, name: s, color: getCategoryHex(s, data) }))
   ];
 
   const handleAddManual = (e) => {
@@ -38,21 +38,19 @@ export default function HabitsTracker({ data, onToggleHabit, onAddHabit, onAddGe
   return (
     <div className="glass-card p-5 flex flex-col gap-4 h-full">
       {/* Header */}
-      <div className="flex justify-between items-start">
-        <div>
-          <h2 className="text-xl font-bold tracking-tight mb-0.5">Hábitos</h2>
-          <p className="text-xs text-slate-400">Tachá lo que completaste hoy</p>
-        </div>
+      <div>
+        <h2 className="text-xl font-bold tracking-tight mb-0.5">Hábitos</h2>
+        <p className="text-xs text-slate-400">Tachá lo que completaste hoy</p>
       </div>
 
-      {/* Legend - Only Limpieza and Deporte as requested */}
-      <div className="flex gap-4 px-1 py-1 border-b border-border/50">
+      {/* Legend - Fixed Colors */}
+      <div className="flex flex-wrap gap-x-4 gap-y-2 px-1 py-1 border-b border-border/50">
         <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-          <span className="w-2 h-2 rounded-full bg-sky-400"></span>
+          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#38bdf8' }}></span>
           Limpieza
         </div>
         <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-          <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#f97316' }}></span>
           Deporte
         </div>
       </div>
@@ -86,7 +84,7 @@ export default function HabitsTracker({ data, onToggleHabit, onAddHabit, onAddGe
           </p>
         )}
         {habitos.map((habit) => {
-          const categoryColor = getCategoryHex(habit.category || 'general');
+          const categoryColor = getCategoryHex(habit.category || 'general', data);
           return (
             <div
               key={habit.id}
@@ -115,12 +113,14 @@ export default function HabitsTracker({ data, onToggleHabit, onAddHabit, onAddGe
                 )}
               </button>
 
-              {/* Task name */}
+              {/* Task name with dynamic contrast */}
               <span
                 onClick={() => onToggleHabit(habit.id)}
                 className={clsx(
-                  "flex-1 text-sm leading-snug transition-colors select-none",
-                  habit.done ? 'text-slate-400 line-through' : 'text-slate-700 dark:text-slate-300'
+                  "flex-1 text-sm font-medium leading-snug transition-colors select-none",
+                  habit.done 
+                    ? 'text-slate-400 line-through' 
+                    : darkMode ? 'text-slate-200' : 'text-slate-800'
                 )}
               >
                 {habit.type === 'generated' && (
@@ -169,16 +169,14 @@ export default function HabitsTracker({ data, onToggleHabit, onAddHabit, onAddGe
               key={cat.key}
               onClick={() => setSelectedCategory(cat.key)}
               className={clsx(
-                "px-2 py-1 rounded-md text-[10px] font-bold border transition-all uppercase tracking-tight",
+                "px-2 py-0.5 rounded-full text-[10px] font-bold border transition-all uppercase tracking-tight flex items-center gap-1.5",
                 selectedCategory === cat.key 
-                  ? "bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500 text-slate-900 dark:text-white" 
-                  : "bg-transparent border-transparent text-slate-400 hover:text-slate-600"
+                  ? "bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500 text-slate-900 dark:text-white scale-105" 
+                  : "bg-transparent border-transparent text-slate-400 hover:text-slate-500"
               )}
             >
-              <div className="flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cat.color }} />
-                {cat.name}
-              </div>
+              <span className="w-2 h-2 rounded-full shadow-sm" style={{ backgroundColor: cat.color }} />
+              {cat.name}
             </button>
           ))}
         </div>

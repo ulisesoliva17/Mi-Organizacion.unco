@@ -64,8 +64,16 @@ export function getMateriaHex(materia, data) {
   return COLOR_HEX_MAP[colorStr] || "#64748b";
 }
 
-export function getCategoryHex(catKey) {
+export function getCategoryHex(catKey, data) {
   if (HABIT_CATEGORIES[catKey]) return HABIT_CATEGORIES[catKey].hex;
+  
+  // Check if it's a subject key (MPN, SI, etc)
+  if (data?.config?.materias?.[catKey]) {
+    const colorKey = data.config.materias[catKey].color;
+    return COLOR_HEX_MAP[colorKey] || "#64748b";
+  }
+
+  // Fallback to direct color map or slate
   return COLOR_HEX_MAP[catKey] || "#64748b";
 }
 

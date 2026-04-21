@@ -112,6 +112,16 @@ export function useAppStore() {
     }));
   };
 
+  // Add a manually-created task from the calendar.
+  // It is stored as a hito so getEventsForDate picks it up automatically
+  // in both MonthlyCalendar and FocusToday.
+  const addManualTask = ({ date, mat, desc }) => {
+    setData(prev => ({
+      ...prev,
+      hitos: [...prev.hitos, { fecha: date, mat, desc, isManual: true }],
+    }));
+  };
+
   return {
     data,
     darkMode,
@@ -122,5 +132,6 @@ export function useAppStore() {
     removeHabit,
     updateHito,
     deleteHito,
+    addManualTask,
   };
 }

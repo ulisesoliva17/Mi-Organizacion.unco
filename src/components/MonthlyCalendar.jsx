@@ -1,17 +1,31 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { getCalendarDays, getEventsForDate, formatShortDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
 import clsx from 'clsx';
-import { isToday, isBefore, startOfDay, parseISO as dateFnsParseISO, getDay } from 'date-fns';
+import { isToday, isBefore, startOfDay, parseISO as dateFnsParseISO, getDay, format } from 'date-fns';
+import { Plus } from 'lucide-react';
+import AddTaskModal from './AddTaskModal';
 
 const WEEK_DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
-export default function MonthlyCalendar({ data, darkMode, onEventClick }) {
+export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTask }) {
   const startDate = parseISO(data.config.fecha_inicio);
   const days = useMemo(() => getCalendarDays(startDate, 30), [startDate]);
 
   // Pad the grid so the first day falls on the correct weekday column (Mon=0)
   const startDayOfWeek = (getDay(startDate) + 6) % 7;
   const emptyDays = Array.from({ length: startDayOfWeek });
+
+  // Modal state — stores the ISO date string of the selected day
+  const [modalDate, setModalDate] = useState(null);
+
+  const handleAddClick = (e, day) => {
+    e.stopPropagation(); // Don't bubble to day-cell click
+    setModalDate(format(day, 'yyyy-MM-dd'));
+  };
+
+  const handleModalAdd = (taskData) => {
+    onAddTask(taskData);
+  };
 
   return (
     <div className="glass-card p-4 md:p-6 flex flex-col h-full w-full">
@@ -34,6 +48,15 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick }) {
               </div>
             );
           })}
+          {/* Habit legend items */}
+          <div className="flex items-center gap-1.5 text-[10px] md:text-sm font-semibold">
+            <span className="w-2 h-2 md:w-3 md:h-3 rounded-full shrink-0" style={{ backgroundColor: '#38bdf8' }} />
+            <span className="text-slate-700 dark:text-slate-300">Limpieza</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[10px] md:text-sm font-semibold">
+            <span className="w-2 h-2 md:w-3 md:h-3 rounded-full shrink-0" style={{ backgroundColor: '#f97316' }} />
+            <span className="text-slate-700 dark:text-slate-300">Deporte</span>
+          </div>
         </div>
       </div>
 
@@ -70,15 +93,31 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick }) {
                 <div
                   key={i}
                   className={clsx(
-                    'min-h-[100px] md:min-h-[120px] border border-border rounded-xl p-2 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-300 dark:hover:border-slate-600',
+                    'group min-h-[100px] md:min-h-[120px] border border-border rounded-xl p-2 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-300 dark:hover:border-slate-600',
                     isTodayDate
                       ? 'ring-2 ring-foreground bg-slate-50 dark:bg-slate-800/50'
                       : 'bg-card',
                     isPast && 'opacity-60'
                   )}
                 >
-                  <div className="text-[10px] md:text-sm font-bold text-slate-500 dark:text-slate-400">
-                    {formatShortDateEs(day)}
+                  {/* Day header: date label + add button */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-[10px] md:text-sm font-bold text-slate-500 dark:text-slate-400">
+                      {formatShortDateEs(day)}
+                    </div>
+                    {/* + button – always visible on today, hover on others */}
+                    <button
+                      onClick={(e) => handleAddClick(e, day)}
+                      title="Agregar tarea"
+                      className={clsx(
+                        'flex items-center justify-center w-5 h-5 rounded-full transition-all hover:scale-110 active:scale-95',
+                        isTodayDate
+                          ? 'bg-foreground text-background opacity-80 hover:opacity-100'
+                          : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 hover:bg-slate-300 dark:hover:bg-slate-600'
+                      )}
+                    >
+                      <Plus className="w-3 h-3" strokeWidth={2.5} />
+                    </button>
                   </div>
 
                   <div className="flex flex-col gap-1.5 md:gap-2 flex-1">
@@ -110,6 +149,16 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick }) {
           </div>
         </div>
       </div>
+
+      {/* Add Task Modal */}
+      <AddTaskModal
+        isOpen={!!modalDate}
+        date={modalDate}
+        onClose={() => setModalDate(null)}
+        onAdd={handleModalAdd}
+        data={data}
+        darkMode={darkMode}
+      />
     </div>
   );
 }

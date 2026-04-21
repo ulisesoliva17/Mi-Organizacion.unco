@@ -7,7 +7,7 @@ import TaskEditModal from './components/TaskEditModal';
 import { Moon, Sun, BookOpen } from 'lucide-react';
 
 function App() {
-  const { data, darkMode, toggleDarkMode, toggleHabit, addHabit, addGeneratedTask, removeHabit, updateHito, deleteHito } = useAppStore();
+  const { data, darkMode, toggleDarkMode, toggleHabit, addHabit, addGeneratedTask, removeHabit, updateHito, deleteHito, addManualTask } = useAppStore();
   const [editingEvent, setEditingEvent] = useState(null);
 
   const handleEventClick = (event) => {
@@ -72,7 +72,7 @@ function App() {
 
           {/* 3. CALENDARIO - Bottom */}
           <div className="order-3 lg:col-span-12 w-full">
-            <MonthlyCalendar data={data} darkMode={darkMode} onEventClick={handleEventClick} />
+            <MonthlyCalendar data={data} darkMode={darkMode} onEventClick={handleEventClick} onAddTask={addManualTask} />
           </div>
 
         </div>

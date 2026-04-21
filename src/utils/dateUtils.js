@@ -78,19 +78,25 @@ export function getCategoryHex(catKey, data) {
 }
 
 export function getDynamicSubjectStyles(materia, data, isDarkMode) {
-  const baseHex = getMateriaHex(materia, data);
-  
+  // Resolve hex: prefer materia lookup, fall back to category lookup
+  // (handles Limpieza, Deporte, and any custom category key)
+  let baseHex = getMateriaHex(materia, data);
+  // getMateriaHex returns slate fallback (#64748b) for unknown keys;
+  // try getCategoryHex which also checks HABIT_CATEGORIES
+  if (baseHex === '#64748b') {
+    const catHex = getCategoryHex(materia, data);
+    if (catHex !== '#64748b') baseHex = catHex;
+  }
+
   if (isDarkMode) {
     return {
       bg: baseHex,
-      text: '#ffffff', // White text on dark background
+      text: '#ffffff', // White text on coloured background
     };
   } else {
-    // In light mode, use a very light version of the background or white with a thick border
-    // But the user asked for "Texto oscuro", so we need a light background.
     return {
-      bg: `${baseHex}22`, // 22 is ~13% opacity in hex for a light tint
-      text: '#0f172a',    // Dark slate text
+      bg: `${baseHex}22`, // ~13% opacity tint
+      text: '#0f172a',    // Dark slate text for contrast
       border: baseHex,
     };
   }

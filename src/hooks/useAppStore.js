@@ -10,6 +10,8 @@ function migrateHabitos(habitos) {
     name,
     done,
     type: 'manual',
+    category: name.toLowerCase().includes('deporte') ? 'deporte' : 
+              name.toLowerCase().includes('limpieza') ? 'limpieza' : 'general'
   }));
 }
 
@@ -56,12 +58,12 @@ export function useAppStore() {
     }));
   };
 
-  // Add a new manual habit
-  const addHabit = (name) => {
+  // Add a new manual habit with category
+  const addHabit = (name, category = 'general') => {
     const id = `manual_${Date.now()}`;
     setData(prev => ({
       ...prev,
-      habitos: [...prev.habitos, { id, name, done: false, type: 'manual' }],
+      habitos: [...prev.habitos, { id, name, done: false, type: 'manual', category }],
     }));
   };
 

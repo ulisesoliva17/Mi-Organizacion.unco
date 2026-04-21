@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
-import { getEventsForDate, formatDateEs, getMateriaHex } from '../utils/dateUtils';
+import { getEventsForDate, formatDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
 import { addDays, startOfDay } from 'date-fns';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 
-export default function FocusToday({ data, onEventClick }) {
+export default function FocusToday({ data, darkMode, onEventClick }) {
   const todayDate = startOfDay(new Date());
   // The user requirement says: "filtrar y mostrar solo eventos con fecha igual o posterior al 20/04/2026."
-  // If todayDate is before 20/04/2026, we use 20/04/2026.
   const minDate = new Date(`${data.config.fecha_inicio}T00:00:00`);
   const effectiveToday = todayDate < minDate ? minDate : todayDate;
   const tomorrowDate = addDays(effectiveToday, 1);
@@ -14,7 +13,7 @@ export default function FocusToday({ data, onEventClick }) {
   const todayEvents = useMemo(() => getEventsForDate(effectiveToday, data), [effectiveToday, data]);
   const tomorrowEvents = useMemo(() => getEventsForDate(tomorrowDate, data), [tomorrowDate, data]);
 
-  const renderEventList = (events, dateLabel) => {
+  const renderEventList = (events) => {
     if (events.length === 0) {
       return <p className="text-sm text-slate-500 italic">No hay tareas o cursadas programadas.</p>;
     }
@@ -22,7 +21,7 @@ export default function FocusToday({ data, onEventClick }) {
     return (
       <div className="space-y-3">
         {events.map((ev, i) => {
-          const hex = getMateriaHex(ev.mat, data);
+          const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
           return (
             <div 
               key={i} 
@@ -31,11 +30,14 @@ export default function FocusToday({ data, onEventClick }) {
             >
               <div 
                 className="w-1.5 rounded-full shrink-0" 
-                style={{ backgroundColor: hex }}
+                style={{ backgroundColor: getMateriaHex(ev.mat, data) }}
               />
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-semibold text-sm group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
+                  <h4 
+                    className="font-bold text-sm transition-colors"
+                    style={{ color: styles.text }}
+                  >
                     {ev.mat}
                   </h4>
                   {ev.hora && (
@@ -45,7 +47,7 @@ export default function FocusToday({ data, onEventClick }) {
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
+                <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                   {ev.desc}
                 </p>
                 {ev.aula && (
@@ -76,14 +78,14 @@ export default function FocusToday({ data, onEventClick }) {
           <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">
             Hoy - {formatDateEs(effectiveToday)}
           </h3>
-          {renderEventList(todayEvents, 'Hoy')}
+          {renderEventList(todayEvents)}
         </div>
         
         <div>
           <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">
             Mañana - {formatDateEs(tomorrowDate)}
           </h3>
-          {renderEventList(tomorrowEvents, 'Mañana')}
+          {renderEventList(tomorrowEvents)}
         </div>
       </div>
     </div>

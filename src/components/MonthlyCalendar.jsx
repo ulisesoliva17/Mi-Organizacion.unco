@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { getCalendarDays, getEventsForDate, formatShortDateEs, getMateriaHex } from '../utils/dateUtils';
+import { getCalendarDays, getEventsForDate, formatShortDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
 import clsx from 'clsx';
 import { isToday, isBefore, startOfDay, parseISO as dateFnsParseISO, getDay } from 'date-fns';
 
 const WEEK_DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
-export default function MonthlyCalendar({ data, onEventClick }) {
+export default function MonthlyCalendar({ data, darkMode, onEventClick }) {
   const startDate = parseISO(data.config.fecha_inicio);
   const days = useMemo(() => getCalendarDays(startDate, 30), [startDate]);
 
@@ -80,18 +80,25 @@ export default function MonthlyCalendar({ data, onEventClick }) {
 
               <div className="flex flex-col gap-2 flex-1">
                 {events.map((ev, j) => {
-                  const hex = getMateriaHex(ev.mat, data);
+                  const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
                   return (
                     <div
                       key={j}
                       onClick={() => onEventClick(ev)}
-                      className="text-xs leading-tight px-2 py-1.5 rounded-md cursor-pointer font-medium text-white shadow-sm transition-transform hover:scale-[1.02] hover:brightness-110"
-                      style={{ backgroundColor: hex }}
+                      className={clsx(
+                        "text-xs leading-tight px-2 py-1.5 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02]",
+                        !darkMode && "border-l-4"
+                      )}
+                      style={{ 
+                        backgroundColor: styles.bg, 
+                        color: styles.text,
+                        borderColor: styles.border
+                      }}
                     >
-                      <div className="font-bold">{ev.mat}</div>
-                      <div className="whitespace-normal break-words">{ev.desc}</div>
+                      <div className="opacity-100">{ev.mat}</div>
+                      <div className="whitespace-normal break-words font-medium opacity-90">{ev.desc}</div>
                       {ev.hora && (
-                        <div className="text-[10px] mt-1 opacity-90">{ev.hora}</div>
+                        <div className="text-[10px] mt-1 opacity-80">{ev.hora}</div>
                       )}
                     </div>
                   );

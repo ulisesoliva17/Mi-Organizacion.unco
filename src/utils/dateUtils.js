@@ -50,11 +50,42 @@ const COLOR_HEX_MAP = {
   "red-600":    "#dc2626",
   "red-500":    "#ef4444",
   "slate-500":  "#64748b",
+  "sky-400":    "#38bdf8",
+  "orange-500": "#f97316",
+};
+
+export const HABIT_CATEGORIES = {
+  limpieza: { name: 'Limpieza', color: 'sky-400', hex: '#38bdf8' },
+  deporte: { name: 'Deporte', color: 'orange-500', hex: '#f97316' },
 };
 
 export function getMateriaHex(materia, data) {
   const colorStr = data.config.materias[materia]?.color || "slate-500";
   return COLOR_HEX_MAP[colorStr] || "#64748b";
+}
+
+export function getCategoryHex(catKey) {
+  if (HABIT_CATEGORIES[catKey]) return HABIT_CATEGORIES[catKey].hex;
+  return COLOR_HEX_MAP[catKey] || "#64748b";
+}
+
+export function getDynamicSubjectStyles(materia, data, isDarkMode) {
+  const baseHex = getMateriaHex(materia, data);
+  
+  if (isDarkMode) {
+    return {
+      bg: baseHex,
+      text: '#ffffff', // White text on dark background
+    };
+  } else {
+    // In light mode, use a very light version of the background or white with a thick border
+    // But the user asked for "Texto oscuro", so we need a light background.
+    return {
+      bg: `${baseHex}22`, // 22 is ~13% opacity in hex for a light tint
+      text: '#0f172a',    // Dark slate text
+      border: baseHex,
+    };
+  }
 }
 
 export function getColorsForMateria(materia, data) {

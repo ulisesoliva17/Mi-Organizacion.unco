@@ -70,13 +70,13 @@ function App() {
 
             {/* Foco Hoy Vertical (Center/Right Column) */}
             <div className="w-full lg:w-3/4 xl:w-4/5 flex-1">
-              <FocusToday data={data} onEventClick={handleEventClick} />
+              <FocusToday data={data} darkMode={darkMode} onEventClick={handleEventClick} />
             </div>
           </div>
 
           {/* Bottom Row: Full Width Calendar */}
           <div className="lg:col-span-12 w-full">
-            <MonthlyCalendar data={data} onEventClick={handleEventClick} />
+            <MonthlyCalendar data={data} darkMode={darkMode} onEventClick={handleEventClick} />
           </div>
 
         </div>

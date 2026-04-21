@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { getEventsForDate, formatDateEs } from '../utils/dateUtils';
+import { getEventsForDate, formatDateEs, getMateriaHex } from '../utils/dateUtils';
 import { addDays, startOfDay } from 'date-fns';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export default function FocusToday({ data, onEventClick }) {
     return (
       <div className="space-y-3">
         {events.map((ev, i) => {
-          const color = data.config.materias[ev.mat]?.color || "slate-500";
+          const hex = getMateriaHex(ev.mat, data);
           return (
             <div 
               key={i} 
@@ -31,7 +31,7 @@ export default function FocusToday({ data, onEventClick }) {
             >
               <div 
                 className="w-1.5 rounded-full shrink-0" 
-                style={{ backgroundColor: `var(--color-${color})` }}
+                style={{ backgroundColor: hex }}
               />
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">

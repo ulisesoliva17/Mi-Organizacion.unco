@@ -37,14 +37,29 @@ export function getEventsForDate(date, data) {
   return [...fixedEvents, ...hitos];
 }
 
-export function getColorsForMateria(materia, data) {
+// Static hex color map — avoids Tailwind purging dynamic class names
+const COLOR_HEX_MAP = {
+  "violet-600": "#7c3aed",
+  "violet-500": "#8b5cf6",
+  "blue-600":   "#2563eb",
+  "blue-500":   "#3b82f6",
+  "emerald-600":"#059669",
+  "emerald-500":"#10b981",
+  "amber-500":  "#f59e0b",
+  "amber-600":  "#d97706",
+  "red-600":    "#dc2626",
+  "red-500":    "#ef4444",
+  "slate-500":  "#64748b",
+};
+
+export function getMateriaHex(materia, data) {
   const colorStr = data.config.materias[materia]?.color || "slate-500";
-  // Tailwind v4 uses variable like bg-violet-500. We can just return the tailwind class strings
-  return {
-    bg: `bg-${colorStr}`,
-    text: `text-${colorStr}`,
-    border: `border-${colorStr}`
-  };
+  return COLOR_HEX_MAP[colorStr] || "#64748b";
+}
+
+export function getColorsForMateria(materia, data) {
+  const hex = getMateriaHex(materia, data);
+  return { hex };
 }
 
 export function getCalendarDays(startDate, numDays = 30) {

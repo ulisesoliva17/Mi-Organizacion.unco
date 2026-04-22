@@ -3,7 +3,7 @@ import { getEventsForDate, formatDateEs, getMateriaHex } from '../utils/dateUtil
 import { addDays, startOfDay } from 'date-fns';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 
-export default function FocusToday({ data, onEventClick }) {
+export default function FocusToday({ data, darkMode, onEventClick }) {
   const todayDate = startOfDay(new Date());
   // The user requirement says: "filtrar y mostrar solo eventos con fecha igual o posterior al 20/04/2026."
   const minDate = new Date(`${data.config.fecha_inicio}T00:00:00`);
@@ -33,21 +33,21 @@ export default function FocusToday({ data, onEventClick }) {
               />
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-bold text-sm text-black dark:text-white transition-colors">
+                  <h4 className={`font-bold text-sm transition-colors ${darkMode ? 'text-white' : 'text-black'}`}>
                     {ev.mat}
                   </h4>
                   {ev.hora && (
-                    <span className="text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded-md flex items-center gap-1">
+                    <span className={`text-xs font-medium px-2 py-1 rounded-md flex items-center gap-1 ${darkMode ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-600'}`}>
                       <Clock className="w-3 h-3" />
                       {ev.hora}
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-slate-700 dark:text-white font-medium">
+                <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-black'}`}>
                   {ev.desc}
                 </p>
                 {ev.aula && (
-                  <div className="mt-2 text-xs text-slate-500 dark:text-slate-300 flex items-center gap-1">
+                  <div className={`mt-2 text-xs flex items-center gap-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                     <MapPin className="w-3 h-3" />
                     Aula: {ev.aula}
                   </div>

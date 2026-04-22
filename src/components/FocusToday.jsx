@@ -25,7 +25,7 @@ export default function FocusToday({ data, onEventClick }) {
             <div 
               key={i} 
               onClick={() => onEventClick(ev)}
-              className="group flex gap-4 p-3 rounded-xl border border-border bg-white dark:bg-slate-900 shadow-sm hover:shadow-md transition-all cursor-pointer"
+              className="group flex gap-4 p-3 rounded-xl border border-border bg-card dark:bg-slate-900 shadow-sm hover:shadow-md transition-all cursor-pointer"
             >
               <div 
                 className="w-1.5 rounded-full shrink-0" 

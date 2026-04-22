@@ -92,7 +92,7 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
                 "group flex items-start gap-3 px-3 py-2.5 rounded-xl border transition-all cursor-pointer",
                 habit.done
                   ? 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800'
-                  : 'bg-slate-50/50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border-border'
+                  : 'bg-card dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border-border'
               )}
             >
               {/* Category indicator bar */}

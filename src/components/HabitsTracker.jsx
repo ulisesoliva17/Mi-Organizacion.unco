@@ -45,11 +45,11 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
 
       {/* Legend - Fixed Colors */}
       <div className="flex flex-wrap gap-x-4 gap-y-2 px-1 py-1 border-b border-border/50">
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-100">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white">
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#38bdf8' }}></span>
           Limpieza
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-100">
+        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white">
           <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#f97316' }}></span>
           Deporte
         </div>

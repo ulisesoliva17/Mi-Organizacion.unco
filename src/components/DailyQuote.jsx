@@ -66,7 +66,7 @@ export default function DailyQuote() {
         strokeWidth={2}
       />
       <div className="min-w-0">
-        <p className="text-[11px] sm:text-xs md:text-sm leading-snug font-medium italic text-slate-700 dark:text-slate-300 line-clamp-2 md:line-clamp-none">
+        <p className="text-[11px] sm:text-xs md:text-sm leading-snug font-medium italic text-slate-700 dark:text-white line-clamp-2 md:line-clamp-none">
           {quote.text}
         </p>
         <p className="text-[10px] sm:text-[11px] font-semibold text-slate-400 dark:text-slate-500 mt-0.5 truncate">

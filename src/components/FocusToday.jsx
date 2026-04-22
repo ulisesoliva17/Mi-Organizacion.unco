@@ -43,11 +43,11 @@ export default function FocusToday({ data, onEventClick }) {
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">
+                <p className="text-sm text-slate-700 dark:text-white font-medium">
                   {ev.desc}
                 </p>
                 {ev.aula && (
-                  <div className="mt-2 text-xs text-slate-500 flex items-center gap-1">
+                  <div className="mt-2 text-xs text-slate-500 dark:text-slate-300 flex items-center gap-1">
                     <MapPin className="w-3 h-3" />
                     Aula: {ev.aula}
                   </div>
@@ -71,14 +71,14 @@ export default function FocusToday({ data, onEventClick }) {
 
       <div className="flex-1 overflow-y-auto pr-2 space-y-6">
         <div>
-          <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">
+          <h3 className="text-sm font-bold text-slate-400 dark:text-slate-200 uppercase tracking-wider mb-3">
             Hoy - {formatDateEs(effectiveToday)}
           </h3>
           {renderEventList(todayEvents)}
         </div>
         
         <div>
-          <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">
+          <h3 className="text-sm font-bold text-slate-400 dark:text-slate-200 uppercase tracking-wider mb-3">
             Mañana - {formatDateEs(tomorrowDate)}
           </h3>
           {renderEventList(tomorrowEvents)}

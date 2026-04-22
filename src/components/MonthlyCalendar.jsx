@@ -42,7 +42,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                   className="w-2 h-2 md:w-3 md:h-3 rounded-full shrink-0"
                   style={{ backgroundColor: hex }}
                 />
-                <span className="text-slate-700 dark:text-slate-300">
+                <span className="text-slate-700 dark:text-white">
                   {matKey}
                 </span>
               </div>
@@ -102,7 +102,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                 >
                   {/* Day header: date label + add button */}
                   <div className="flex items-center justify-between">
-                    <div className="text-[10px] md:text-sm font-bold text-slate-500 dark:text-slate-400">
+                    <div className="text-[10px] md:text-sm font-bold text-slate-500 dark:text-slate-300">
                       {formatShortDateEs(day)}
                     </div>
                     {/* + button – always visible on today, hover on others */}

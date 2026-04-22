@@ -40,7 +40,7 @@ function App() {
             </div>
             <div>
               <h1 className="text-lg md:text-2xl font-bold tracking-tight leading-none">UNCo Tracker</h1>
-              <p className="text-[10px] md:text-sm text-slate-500 font-medium">Ingeniería de Software</p>
+              <p className="text-[10px] md:text-sm text-slate-500 dark:text-slate-300 font-medium">Ingeniería de Software</p>
             </div>
             <button
               onClick={toggleDarkMode}

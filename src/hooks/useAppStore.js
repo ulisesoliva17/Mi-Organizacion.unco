@@ -17,12 +17,26 @@ function migrateHabitos(habitos) {
 
 function getInitialData() {
   const stored = localStorage.getItem('uncoApp_data');
-  if (stored) {
-    const parsed = JSON.parse(stored);
-    return { ...parsed, habitos: migrateHabitos(parsed.habitos) };
-  }
   const base = { ...initialData };
   base.habitos = migrateHabitos(base.habitos);
+
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    const storedHitos = parsed.hitos || [];
+    
+    // Merge hitos: keep stored ones, and add any from initialData that are missing
+    const mergedHitos = [...storedHitos];
+    base.hitos.forEach(h => {
+      const exists = storedHitos.some(eh => eh.fecha === h.fecha && eh.desc === h.desc && eh.mat === h.mat);
+      if (!exists) mergedHitos.push(h);
+    });
+
+    return { 
+      ...parsed, 
+      hitos: mergedHitos,
+      habitos: migrateHabitos(parsed.habitos) 
+    };
+  }
   return base;
 }
 

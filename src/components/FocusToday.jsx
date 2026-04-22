@@ -33,17 +33,17 @@ export default function FocusToday({ data, onEventClick }) {
               />
               <div className="flex-1">
                 <div className="flex justify-between items-start mb-1">
-                  <h4 className="font-bold text-sm text-slate-900 dark:text-slate-100 transition-colors">
+                  <h4 className="font-bold text-sm text-black dark:text-white transition-colors">
                     {ev.mat}
                   </h4>
                   {ev.hora && (
-                    <span className="text-xs font-medium bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md flex items-center gap-1">
+                    <span className="text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded-md flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {ev.hora}
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                <p className="text-sm text-slate-700 dark:text-slate-300 font-medium">
                   {ev.desc}
                 </p>
                 {ev.aula && (

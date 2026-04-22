@@ -25,13 +25,27 @@ export const initialData = {
     
     { fecha: "2026-04-20", mat: "MPN", desc: "TP3A" },
     { fecha: "2026-04-21", mat: "MPN", desc: "TP3A" },
-    { fecha: "2026-04-22", mat: "MPN", desc: "TP3A" },
+    { fecha: "2026-04-22", mat: "MPN", desc: "Entrega TP3A Ejercicio 1" },
     { fecha: "2026-04-23", mat: "MPN", desc: "TP3A" },
     { fecha: "2026-04-24", mat: "MPN", desc: "TP3A" },
     { fecha: "2026-04-27", mat: "MPN", desc: "TP3A" },
     { fecha: "2026-04-28", mat: "MPN", desc: "TP3A" },
     { fecha: "2026-04-29", mat: "MPN", desc: "TP3A" },
     { fecha: "2026-04-30", mat: "MPN", desc: "TP3A" },
+    
+    { fecha: "2026-05-04", mat: "MPN", desc: "Primer Parcial (Semana)" },
+    { fecha: "2026-05-04", mat: "MPN", desc: "Consultas 1er Parcial (Semana)" },
+    { fecha: "2026-05-11", mat: "MPN", desc: "TP3B (Semana)" },
+    { fecha: "2026-05-18", mat: "MPN", desc: "Recuperatorio 1 Parcial (Semana)" },
+    { fecha: "2026-05-19", mat: "MPN", desc: "TP3B (Clase Martes)" },
+    { fecha: "2026-05-26", mat: "MPN", desc: "TP3B y TP4 (Semana)" },
+    
+    { fecha: "2026-06-01", mat: "MPN", desc: "TP4 y TP5 (Semana)" },
+    { fecha: "2026-06-05", mat: "MPN", desc: "Entrega TP5 Ejercicio 1" },
+    { fecha: "2026-06-08", mat: "MPN", desc: "Segundo Parcial (Semana)" },
+    { fecha: "2026-06-16", mat: "MPN", desc: "Consultas virtuales (Semana)" },
+    { fecha: "2026-06-22", mat: "MPN", desc: "Recuperatorio 2do Parcial (Semana)" },
+    { fecha: "2026-06-29", mat: "MPN", desc: "COLOQUIO (Semana)" },
     
     { fecha: "2026-05-05", mat: "SI", desc: "Consulta Unidad II" },
     { fecha: "2026-05-07", mat: "SI", desc: "PRIMER PARCIAL" },

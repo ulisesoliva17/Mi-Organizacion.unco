@@ -60,15 +60,15 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
         </div>
       </div>
 
-      {/* Grid Container with Horizontal Scroll on Mobile */}
-      <div className="w-full overflow-x-auto pb-2 scrollbar-thin">
-        <div className="min-w-[800px] md:min-w-0">
+      {/* Grid Container */}
+      <div className="w-full overflow-hidden pb-2">
+        <div className="w-full">
           {/* Week-day header row */}
-          <div className="grid grid-cols-7 gap-2 md:gap-3 mb-3">
+          <div className="grid grid-cols-7 gap-1 md:gap-3 mb-3">
             {WEEK_DAYS.map((dayName, idx) => (
               <div
                 key={idx}
-                className="text-center text-[10px] md:text-sm font-bold text-slate-400 uppercase tracking-wider"
+                className="text-center text-[9px] md:text-sm font-bold text-slate-400 uppercase tracking-wider"
               >
                 {dayName}
               </div>
@@ -76,11 +76,11 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
           </div>
 
           {/* Days Grid */}
-          <div className="grid grid-cols-7 gap-2 md:gap-3">
+          <div className="grid grid-cols-7 gap-1 md:gap-3">
             {emptyDays.map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="min-h-[100px] md:min-h-[120px] rounded-xl bg-slate-50/50 dark:bg-slate-900/20 border border-transparent"
+                className="min-h-[60px] md:min-h-[120px] rounded-lg md:rounded-xl bg-slate-50/50 dark:bg-slate-900/20 border border-transparent"
               />
             ))}
 
@@ -93,7 +93,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                 <div
                   key={i}
                   className={clsx(
-                    'group min-h-[100px] md:min-h-[120px] border border-border rounded-xl p-2 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-300 dark:hover:border-slate-600',
+                    'group min-h-[70px] md:min-h-[120px] border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-300 dark:hover:border-slate-600',
                     isTodayDate
                       ? 'ring-2 ring-foreground bg-slate-50 dark:bg-slate-800/50'
                       : 'bg-card',
@@ -102,25 +102,25 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                 >
                   {/* Day header: date label + add button */}
                   <div className="flex items-center justify-between">
-                    <div className="text-[10px] md:text-sm font-bold text-slate-500 dark:text-slate-300">
+                    <div className="text-[9px] md:text-sm font-bold text-slate-500 dark:text-slate-300">
                       {formatShortDateEs(day)}
                     </div>
-                    {/* + button – always visible on today, hover on others */}
+                    {/* + button – always visible on today, hover on others or touch on mobile */}
                     <button
                       onClick={(e) => handleAddClick(e, day)}
                       title="Agregar tarea"
                       className={clsx(
-                        'flex items-center justify-center w-5 h-5 rounded-full transition-all hover:scale-110 active:scale-95',
+                        'flex items-center justify-center w-4 h-4 md:w-5 md:h-5 rounded-full transition-all hover:scale-110 active:scale-95',
                         isTodayDate
                           ? 'bg-foreground text-background opacity-80 hover:opacity-100'
-                          : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 hover:bg-slate-300 dark:hover:bg-slate-600'
+                          : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 md:opacity-0 hover:bg-slate-300 dark:hover:bg-slate-600'
                       )}
                     >
-                      <Plus className="w-3 h-3" strokeWidth={2.5} />
+                      <Plus className="w-2.5 h-2.5 md:w-3 md:h-3" strokeWidth={3} />
                     </button>
                   </div>
 
-                  <div className="flex flex-col gap-1.5 md:gap-2 flex-1">
+                  <div className="flex flex-col gap-1 md:gap-2 flex-1">
                     {events.map((ev, j) => {
                       const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
                       return (
@@ -128,8 +128,8 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                           key={j}
                           onClick={() => onEventClick(ev)}
                           className={clsx(
-                            "text-[10px] md:text-xs leading-tight px-1.5 py-1 md:px-2 md:py-1.5 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02]",
-                            !darkMode && "border-l-2 md:border-l-4"
+                            "text-[8px] md:text-xs leading-tight px-1 py-0.5 md:px-2 md:py-1.5 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02] truncate md:whitespace-normal",
+                            !darkMode && "border-l md:border-l-4"
                           )}
                           style={{ 
                             backgroundColor: styles.bg, 
@@ -137,8 +137,8 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                             borderColor: styles.border
                           }}
                         >
-                          <div className="font-black">{ev.mat}</div>
-                          <div className="whitespace-normal break-words font-semibold opacity-90 line-clamp-2 md:line-clamp-none">{ev.desc}</div>
+                          <div className="hidden md:block font-black">{ev.mat}</div>
+                          <div className="md:whitespace-normal break-words font-semibold opacity-90 line-clamp-1 md:line-clamp-none">{ev.desc}</div>
                         </div>
                       );
                     })}

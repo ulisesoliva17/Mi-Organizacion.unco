@@ -53,18 +53,46 @@
   }
 }
 
-/* Scrollbar styles for the Bento Grid */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+  .glass-card {
+    padding: 0.75rem;
+    border-radius: 1rem;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Optimize touch targets */
+  button, 
+  [role="button"],
+  .cursor-pointer {
+    min-height: 24px;
+    touch-action: manipulation;
+  }
+
+  /* Calendar specific mobile refinements */
+  .grid-cols-7 {
+    gap: 4px !important;
+  }
+
+  /* Ensure the calendar doesn't overflow and text is readable */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .grid-cols-7 {
+    gap: 2px !important;
+  }
+  
+  .glass-card {
+    padding: 0.5rem;
+  }
 }

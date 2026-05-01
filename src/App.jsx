@@ -4,6 +4,7 @@ import FocusToday from './components/FocusToday';
 import MonthlyCalendar from './components/MonthlyCalendar';
 import HabitsTracker from './components/HabitsTracker';
 import TaskEditModal from './components/TaskEditModal';
+import FixedGoals from './components/FixedGoals';
 import { Moon, Sun, BookOpen } from 'lucide-react';
 import DailyQuote from './components/DailyQuote';
 
@@ -67,16 +68,16 @@ function App() {
           <DailyQuote />
         </div>
 
-        {/* Layout Grid - Stacks on mobile, Grid on large screens */}
+        {/* Layout Grid - Stacks on mobile, 3-column Grid on large screens */}
         <div className="flex flex-col gap-4 md:gap-6 lg:grid lg:grid-cols-12">
           
-          {/* 1. FOCO HOY - First on mobile */}
-          <div className="order-1 lg:order-2 lg:col-span-8 xl:col-span-9 flex flex-col h-full">
+          {/* 1. FOCO HOY - Center, 6 cols on large screens */}
+          <div className="order-1 lg:order-2 lg:col-span-6 flex flex-col h-full">
             <FocusToday data={data} darkMode={darkMode} onEventClick={handleEventClick} />
           </div>
 
-          {/* 2. HÁBITOS - Second on mobile, Sidebar on desktop */}
-          <div className="order-2 lg:order-1 lg:col-span-4 xl:col-span-3 flex flex-col">
+          {/* 2. HÁBITOS - Left sidebar, 3 cols */}
+          <div className="order-2 lg:order-1 lg:col-span-3 flex flex-col">
             <HabitsTracker
               data={data}
               darkMode={darkMode}
@@ -87,8 +88,13 @@ function App() {
             />
           </div>
 
-          {/* 3. CALENDARIO - Bottom */}
-          <div className="order-3 lg:col-span-12 w-full">
+          {/* 3. METAS FIJAS - Right sidebar, 3 cols */}
+          <div className="order-3 lg:order-3 lg:col-span-3 flex flex-col">
+            <FixedGoals data={data} darkMode={darkMode} />
+          </div>
+
+          {/* 4. CALENDARIO - Full width bottom */}
+          <div className="order-4 lg:col-span-12 w-full">
             <MonthlyCalendar data={data} darkMode={darkMode} onEventClick={handleEventClick} onAddTask={addManualTask} />
           </div>
 

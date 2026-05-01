@@ -8,11 +8,23 @@ import AddTaskModal from './AddTaskModal';
 const WEEK_DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
 export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTask }) {
+  const today = startOfDay(new Date());
   const startDate = parseISO(data.config.fecha_inicio);
-  const days = useMemo(() => getCalendarDays(startDate, 30), [startDate]);
 
-  // Pad the grid so the first day falls on the correct weekday column (Mon=0)
-  const startDayOfWeek = (getDay(startDate) + 6) % 7;
+  // All days in the period (30 days from start)
+  const allDays = useMemo(() => getCalendarDays(startDate, 30), [startDate]);
+
+  // Filter: only show today and future days. Auto-updates because `today` is computed fresh each render.
+  const days = useMemo(
+    () => allDays.filter(d => !isBefore(d, today)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allDays]
+  );
+
+  // Pad the grid so the FIRST VISIBLE day falls on the correct weekday column (Mon=0)
+  // We compute this from the actual first displayed day (could be today if past days are hidden)
+  const firstVisibleDay = days[0];
+  const startDayOfWeek = firstVisibleDay ? (getDay(firstVisibleDay) + 6) % 7 : 0;
   const emptyDays = Array.from({ length: startDayOfWeek });
 
   // Modal state — stores the ISO date string of the selected day
@@ -86,7 +98,6 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
 
             {days.map((day, i) => {
               const events = getEventsForDate(day, data);
-              const isPast = isBefore(day, startOfDay(new Date()));
               const isTodayDate = isToday(day);
 
               return (
@@ -96,8 +107,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                     'group min-h-[70px] md:min-h-[120px] border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-300 dark:hover:border-slate-600',
                     isTodayDate
                       ? 'ring-2 ring-foreground bg-slate-50 dark:bg-slate-800/50'
-                      : 'bg-card',
-                    isPast && 'opacity-60'
+                      : 'bg-card'
                   )}
                 >
                   {/* Day header: date label + add button */}

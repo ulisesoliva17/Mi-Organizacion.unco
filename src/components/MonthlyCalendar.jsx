@@ -92,7 +92,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             {emptyDays.map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="min-h-[60px] md:min-h-[120px] rounded-lg md:rounded-xl bg-slate-100/40 dark:bg-transparent border border-transparent"
+                className="min-h-[60px] md:min-h-[120px] rounded-lg md:rounded-xl bg-slate-100/40 dark:!bg-transparent md:dark:!bg-transparent border border-transparent"
               />
             ))}
 

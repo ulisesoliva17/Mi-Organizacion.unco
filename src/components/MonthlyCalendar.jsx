@@ -92,7 +92,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             {emptyDays.map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="min-h-[60px] md:min-h-[120px] rounded-lg md:rounded-xl bg-slate-50/50 dark:bg-slate-900/20 border border-transparent"
+                className="min-h-[60px] md:min-h-[120px] rounded-lg md:rounded-xl bg-slate-100/40 dark:bg-slate-900 border border-transparent"
               />
             ))}
 
@@ -107,7 +107,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                     'group min-h-[70px] md:min-h-[120px] border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-300 dark:hover:border-slate-600',
                     isTodayDate
                       ? 'ring-2 ring-foreground bg-slate-50 dark:bg-slate-800/50'
-                      : 'bg-card'
+                      : 'bg-card dark:bg-slate-900'
                   )}
                 >
                   {/* Day header: date label + add button */}

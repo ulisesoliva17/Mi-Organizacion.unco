@@ -94,7 +94,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             {emptyDays.map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="h-[85px] md:h-[130px] rounded-lg md:rounded-xl bg-black/5 dark:!bg-card border border-transparent"
+                className="h-[110px] md:h-[160px] rounded-lg md:rounded-xl bg-[#DCD0B9]/60 dark:!bg-card border border-transparent"
               />
             ))}
 
@@ -107,10 +107,10 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                   key={i}
                   onClick={() => setDayDetailsDate(day)}
                   className={clsx(
-                    'group h-[85px] md:h-[130px] overflow-hidden cursor-pointer border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-sm',
+                    'group h-[110px] md:h-[160px] overflow-hidden cursor-pointer border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-sm',
                     isTodayDate
-                      ? 'ring-2 ring-foreground bg-black/5 dark:bg-slate-800/50'
-                      : 'bg-card dark:bg-slate-900'
+                      ? 'ring-2 ring-foreground bg-[#E3D5BE] dark:bg-slate-800/50'
+                      : 'bg-[#EAE0CB] dark:bg-slate-900'
                   )}
                 >
                   {/* Day header: date label + add button */}

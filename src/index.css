@@ -22,11 +22,11 @@
 
 @layer base {
   :root {
-    --background: #f5f5dc;
-    --foreground: #0f172a;
-    --card: #fefcf3;
-    --card-foreground: #0f172a;
-    --border: #e2e8f0;
+    --background: #F4EAD5;
+    --foreground: #3A3226;
+    --card: #FDF8F0;
+    --card-foreground: #3A3226;
+    --border: #E3D5BA;
   }
 
   .dark {
@@ -46,7 +46,7 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-slate-200 dark:border-slate-800;
+    @apply bg-[#FDF8F0]/70 dark:bg-slate-900/70 backdrop-blur-md border border-[#E3D5BA] dark:border-slate-800;
   }
   
   .glass-card {

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { isToday, isBefore, startOfDay, parseISO as dateFnsParseISO, getDay, format } from 'date-fns';
 import { Plus } from 'lucide-react';
 import AddTaskModal from './AddTaskModal';
+import DayDetailsModal from './DayDetailsModal';
 
 const WEEK_DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
@@ -29,6 +30,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
 
   // Modal state — stores the ISO date string of the selected day
   const [modalDate, setModalDate] = useState(null);
+  const [dayDetailsDate, setDayDetailsDate] = useState(null);
 
   const handleAddClick = (e, day) => {
     e.stopPropagation(); // Don't bubble to day-cell click
@@ -92,7 +94,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             {emptyDays.map((_, i) => (
               <div
                 key={`empty-${i}`}
-                className="min-h-[60px] md:min-h-[120px] rounded-lg md:rounded-xl bg-slate-100/40 dark:!bg-card md:dark:!bg-card border border-transparent"
+                className="h-[85px] md:h-[130px] rounded-lg md:rounded-xl bg-black/5 dark:!bg-card border border-transparent"
               />
             ))}
 
@@ -103,10 +105,11 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
               return (
                 <div
                   key={i}
+                  onClick={() => setDayDetailsDate(day)}
                   className={clsx(
-                    'group min-h-[70px] md:min-h-[120px] border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-300 dark:hover:border-slate-600',
+                    'group h-[85px] md:h-[130px] overflow-hidden cursor-pointer border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-sm',
                     isTodayDate
-                      ? 'ring-2 ring-foreground bg-slate-50 dark:bg-slate-800/50'
+                      ? 'ring-2 ring-foreground bg-black/5 dark:bg-slate-800/50'
                       : 'bg-card dark:bg-slate-900'
                   )}
                 >
@@ -136,7 +139,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                       return (
                         <div
                           key={j}
-                          onClick={() => onEventClick(ev)}
+                          onClick={(e) => { e.stopPropagation(); onEventClick(ev); }}
                           className={clsx(
                             "text-[8px] md:text-xs leading-tight px-1 py-0.5 md:px-2 md:py-1.5 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02] truncate md:whitespace-normal",
                             !darkMode && "border-l md:border-l-4"
@@ -168,6 +171,17 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
         onAdd={handleModalAdd}
         data={data}
         darkMode={darkMode}
+      />
+
+      {/* Day Details Modal */}
+      <DayDetailsModal
+        isOpen={!!dayDetailsDate}
+        date={dayDetailsDate}
+        onClose={() => setDayDetailsDate(null)}
+        data={data}
+        darkMode={darkMode}
+        onEventClick={onEventClick}
+        onAddTask={(d) => setModalDate(format(d, 'yyyy-MM-dd'))}
       />
     </div>
   );

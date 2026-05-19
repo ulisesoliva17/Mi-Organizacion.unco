@@ -22,22 +22,32 @@ function getInitialData() {
 
   if (stored) {
     const parsed = JSON.parse(stored);
+    const storedVersion = parsed.dataVersion || 1;
+
+    if (storedVersion < (initialData.dataVersion || 1)) {
+      const manualHitos = (parsed.hitos || []).filter(h => h.isManual);
+      return {
+        ...parsed,
+        dataVersion: initialData.dataVersion,
+        hitos: [...base.hitos, ...manualHitos],
+        habitos: migrateHabitos(parsed.habitos),
+      };
+    }
+
     const storedHitos = parsed.hitos || [];
-    
-    // Merge hitos: keep stored ones, and add any from initialData that are missing
     const mergedHitos = [...storedHitos];
     base.hitos.forEach(h => {
       const exists = storedHitos.some(eh => eh.fecha === h.fecha && eh.desc === h.desc && eh.mat === h.mat);
       if (!exists) mergedHitos.push(h);
     });
 
-    return { 
-      ...parsed, 
+    return {
+      ...parsed,
       hitos: mergedHitos,
-      habitos: migrateHabitos(parsed.habitos) 
+      habitos: migrateHabitos(parsed.habitos)
     };
   }
-  return base;
+  return { ...base, dataVersion: initialData.dataVersion };
 }
 
 export function useAppStore() {

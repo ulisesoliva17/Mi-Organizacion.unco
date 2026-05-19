@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { getCalendarDays, getEventsForDate, formatShortDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
 import clsx from 'clsx';
-import { isToday, isBefore, startOfDay, parseISO as dateFnsParseISO, getDay, format } from 'date-fns';
+import { isToday, isBefore, startOfDay, parseISO as dateFnsParseISO, getDay, format, differenceInCalendarDays, addDays } from 'date-fns';
 import { Plus } from 'lucide-react';
 import AddTaskModal from './AddTaskModal';
 import DayDetailsModal from './DayDetailsModal';
@@ -12,8 +12,17 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
   const today = startOfDay(new Date());
   const startDate = parseISO(data.config.fecha_inicio);
 
-  // All days in the period (30 days from start)
-  const allDays = useMemo(() => getCalendarDays(startDate, 30), [startDate]);
+  // Cover every hito in data plus a 14-day buffer after the last one (min 90 days ahead of today)
+  const allDays = useMemo(() => {
+    const lastHitoDate = data.hitos.reduce((max, h) => {
+      const d = parseISO(h.fecha);
+      return d > max ? d : max;
+    }, startDate);
+    const minEnd = addDays(today, 90);
+    const endDate = lastHitoDate > minEnd ? lastHitoDate : minEnd;
+    const numDays = differenceInCalendarDays(addDays(endDate, 14), startDate);
+    return getCalendarDays(startDate, numDays);
+  }, [startDate, data.hitos]);
 
   // Filter: only show today and future days. Auto-updates because `today` is computed fresh each render.
   const days = useMemo(
@@ -125,8 +134,8 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                       className={clsx(
                         'flex items-center justify-center w-4 h-4 md:w-5 md:h-5 rounded-full transition-all hover:scale-110 active:scale-95',
                         isTodayDate
-                          ? 'bg-foreground text-background opacity-80 hover:opacity-100'
-                          : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 opacity-0 group-hover:opacity-100 md:opacity-0 hover:bg-slate-300 dark:hover:bg-slate-600'
+                          ? 'bg-foreground text-background opacity-90 hover:opacity-100'
+                          : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 opacity-50 hover:opacity-100 hover:bg-slate-300 dark:hover:bg-slate-600'
                       )}
                     >
                       <Plus className="w-2.5 h-2.5 md:w-3 md:h-3" strokeWidth={3} />

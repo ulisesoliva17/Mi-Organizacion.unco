@@ -1,6 +1,14 @@
 import { format, parseISO, addDays, getDay, isSameDay, isAfter, isBefore, startOfDay } from 'date-fns';
 import { es } from 'date-fns/locale';
 
+const CURSADA_LABELS = {
+  ER:  'Cursada Virtual',
+  SO:  'Cursada i4',
+  PCP: 'Cursada en i11',
+  SI:  'Cursada en i9',
+  MPN: 'Cursada en i9',
+};
+
 const DAYS_OF_WEEK = {
   "Domingo": 0,
   "Lunes": 1,
@@ -23,7 +31,7 @@ export function getEventsForDate(date, data) {
   const fixedEvents = fixedDayEntry ? fixedDayEntry.eventos.map(ev => ({
     ...ev,
     isFixed: true,
-    desc: `Cursada en ${ev.aula}`,
+    desc: CURSADA_LABELS[ev.mat] ?? `Cursada ${ev.aula}`,
     fecha: dateStr
   })) : [];
 

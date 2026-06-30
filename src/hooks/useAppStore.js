@@ -29,6 +29,8 @@ function getInitialData() {
       return {
         ...parsed,
         dataVersion: initialData.dataVersion,
+        config: base.config,
+        horarios_fijos: base.horarios_fijos,
         hitos: [...base.hitos, ...manualHitos],
         habitos: migrateHabitos(parsed.habitos),
       };
@@ -43,6 +45,8 @@ function getInitialData() {
 
     return {
       ...parsed,
+      config: base.config,
+      horarios_fijos: base.horarios_fijos,
       hitos: mergedHitos,
       habitos: migrateHabitos(parsed.habitos)
     };

@@ -1,5 +1,5 @@
 export const initialData = {
-  dataVersion: 2,
+  dataVersion: 3,
   config: {
     fecha_inicio: "2026-04-20",
     materias: {
@@ -7,15 +7,16 @@ export const initialData = {
       SI: { nombre: "Sistemas de Información I", color: "blue-600" },
       PCP: { nombre: "Planificación y Control de Proyectos", color: "emerald-600" },
       ER: { nombre: "Especificación de Requerimientos", color: "amber-500" },
-      SO: { nombre: "Sistemas Operativos", color: "red-600" }
+      SO: { nombre: "Sistemas Operativos", color: "red-600" },
+      ING: { nombre: "Inglés autodidacta", color: "teal-500" }
     }
   },
   horarios_fijos: [
-    { dia: "Lunes", eventos: [ { hora: "15:00 - 18:00", mat: "PCP", aula: "" }, { hora: "18:30 - 21:00", mat: "ER", aula: "" } ] },
-    { dia: "Martes", eventos: [ { hora: "14:00 - 16:00", mat: "SI", aula: "" } ] },
-    { dia: "Miércoles", eventos: [ { hora: "18:00 - 21:00", mat: "ER", aula: "" } ] },
-    { dia: "Jueves", eventos: [ { hora: "16:00 - 18:00", mat: "SI", aula: "" }, { hora: "18:00 - 21:00", mat: "MPN", aula: "" } ] },
-    { dia: "Viernes", eventos: [ { hora: "10:00 - 12:00", mat: "SO", aula: "" }, { hora: "14:00 - 16:00", mat: "SO", aula: "" } ] }
+    { dia: "Lunes",    eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
+    { dia: "Martes",   eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
+    { dia: "Miércoles",eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
+    { dia: "Jueves",   eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
+    { dia: "Viernes",  eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] }
   ],
   hitos: [
     { fecha: "2026-04-15", mat: "SI", desc: "TP 2 - Ej. 3" },

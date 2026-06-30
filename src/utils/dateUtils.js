@@ -31,7 +31,7 @@ export function getEventsForDate(date, data) {
   const fixedEvents = fixedDayEntry ? fixedDayEntry.eventos.map(ev => ({
     ...ev,
     isFixed: true,
-    desc: CURSADA_LABELS[ev.mat] ?? `Cursada ${ev.aula}`,
+    desc: ev.desc ?? CURSADA_LABELS[ev.mat] ?? `Cursada ${ev.aula}`,
     fecha: dateStr
   })) : [];
 
@@ -60,6 +60,7 @@ const COLOR_HEX_MAP = {
   "slate-500":  "#64748b",
   "sky-400":    "#38bdf8",
   "orange-500": "#f97316",
+  "teal-500":   "#14b8a6",
 };
 
 export const HABIT_CATEGORIES = {

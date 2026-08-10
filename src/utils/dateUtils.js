@@ -60,7 +60,13 @@ const COLOR_HEX_MAP = {
   "slate-500":  "#64748b",
   "sky-400":    "#38bdf8",
   "orange-500": "#f97316",
+  "orange-600": "#ea580c",
   "teal-500":   "#14b8a6",
+  "cyan-600":   "#0891b2",
+  "fuchsia-600":"#c026d3",
+  "indigo-600": "#4f46e5",
+  "rose-600":   "#e11d48",
+  "lime-600":   "#65a30d",
 };
 
 export const HABIT_CATEGORIES = {

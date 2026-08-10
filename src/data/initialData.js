@@ -8,15 +8,40 @@ export const initialData = {
       PCP: { nombre: "Planificación y Control de Proyectos", color: "emerald-600" },
       ER: { nombre: "Especificación de Requerimientos", color: "amber-500" },
       SO: { nombre: "Sistemas Operativos", color: "red-600" },
-      ING: { nombre: "Inglés autodidacta", color: "teal-500" }
+      ING: { nombre: "Inglés autodidacta", color: "teal-500", profesor: "Autodidacta" },
+      RED1: { nombre: "Redes de Computadoras I", color: "cyan-600", profesor: "Zanellato" },
+      LBD: { nombre: "Laboratorio de Bases de Datos", color: "fuchsia-600", profesor: "Mazalu" },
+      SI2: { nombre: "Sistemas de Información II", color: "indigo-600", profesor: "Martinez" },
+      DMD: { nombre: "Depósito y Minería de Datos", color: "rose-600", profesor: "Buccella" },
+      IA: { nombre: "Inteligencia Artificial", color: "lime-600", profesor: "Cecchi - Marinelli" },
+      EDS: { nombre: "Especificación de Diseño de Software", color: "orange-600", profesor: "De Renzis" }
     }
   },
   horarios_fijos: [
-    { dia: "Lunes",    eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
-    { dia: "Martes",   eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
-    { dia: "Miércoles",eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
-    { dia: "Jueves",   eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] },
-    { dia: "Viernes",  eventos: [ { hora: "16:00", mat: "ING", desc: "Inglés autodidacta" } ] }
+    { dia: "Lunes", eventos: [
+      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "16:30 - 20:30", mat: "LBD", desc: "Teoría-Práctica", aula: "Aula i6" }
+    ] },
+    { dia: "Martes", eventos: [
+      { hora: "13:00 - 15:00", mat: "RED1", desc: "Redes de Computadoras I", aula: "Aula i6" },
+      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "15:00 - 19:00", mat: "SI2", desc: "Teoría/Práctica", aula: "Aula i9" }
+    ] },
+    { dia: "Miércoles", eventos: [
+      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "15:00 - 21:00", mat: "DMD", desc: "Teoría/Práctica", aula: "Aula i6" }
+    ] },
+    { dia: "Jueves", eventos: [
+      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "15:00 - 17:00", mat: "IA", desc: "Teoría", aula: "Aula i8" },
+      { hora: "17:00 - 19:00", mat: "IA", desc: "Práctica", aula: "Aula i8" }
+    ] },
+    { dia: "Viernes", eventos: [
+      { hora: "13:00 - 15:00", mat: "RED1", desc: "Redes de Computadoras I", aula: "Aula i6" },
+      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "17:00 - 19:00", mat: "EDS", desc: "Teoría", aula: "Aula i9" },
+      { hora: "19:00 - 21:00", mat: "EDS", desc: "Práctica", aula: "Aula i9" }
+    ] }
   ],
   hitos: [
     { fecha: "2026-04-15", mat: "SI", desc: "TP 2 - Ej. 3" },

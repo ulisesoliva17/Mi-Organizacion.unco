@@ -1,13 +1,7 @@
 import { format, parseISO, addDays, getDay, isSameDay, isAfter, isBefore, startOfDay } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-const CURSADA_LABELS = {
-  ER:  'Cursada Virtual',
-  SO:  'Cursada i4',
-  PCP: 'Cursada en i11',
-  SI:  'Cursada en i9',
-  MPN: 'Cursada en i9',
-};
+const CURSADA_LABELS = {};
 
 const DAYS_OF_WEEK = {
   "Domingo": 0,

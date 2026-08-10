@@ -3,11 +3,6 @@ export const initialData = {
   config: {
     fecha_inicio: "2026-04-20",
     materias: {
-      MPN: { nombre: "Modelado de Procesos de Negocios", color: "violet-600" },
-      SI: { nombre: "Sistemas de Información I", color: "blue-600" },
-      PCP: { nombre: "Planificación y Control de Proyectos", color: "emerald-600" },
-      ER: { nombre: "Especificación de Requerimientos", color: "amber-500" },
-      SO: { nombre: "Sistemas Operativos", color: "red-600" },
       ING: { nombre: "Inglés autodidacta", color: "teal-500", profesor: "Autodidacta" },
       RED1: { nombre: "Redes de Computadoras I", color: "cyan-600", profesor: "Zanellato" },
       LBD: { nombre: "Laboratorio de Bases de Datos", color: "fuchsia-600", profesor: "Mazalu" },

@@ -4,6 +4,7 @@ export const initialData = {
     fecha_inicio: "2026-04-20",
     materias: {
       ING: { nombre: "Inglés autodidacta", color: "teal-500", profesor: "Autodidacta" },
+      BE: { nombre: "Bloque de estudio", color: "yellow-500" },
       RED1: { nombre: "Redes de Computadoras I", color: "cyan-600", profesor: "Zanellato" },
       LBD: { nombre: "Laboratorio de Bases de Datos", color: "fuchsia-600", profesor: "Mazalu" },
       SI2: { nombre: "Sistemas de Información II", color: "indigo-600", profesor: "Martinez" },
@@ -14,26 +15,26 @@ export const initialData = {
   },
   horarios_fijos: [
     { dia: "Lunes", eventos: [
-      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "10:00 - 12:00", mat: "ING", desc: "Inglés autodidacta" },
       { hora: "16:30 - 20:30", mat: "LBD", desc: "Teoría-Práctica", aula: "Aula i6" }
     ] },
     { dia: "Martes", eventos: [
+      { hora: "10:00 - 11:00", mat: "BE", desc: "Bloque de estudio" },
       { hora: "13:00 - 15:00", mat: "RED1", desc: "Redes de Computadoras I", aula: "Aula i6" },
-      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
-      { hora: "15:00 - 19:00", mat: "SI2", desc: "Teoría/Práctica", aula: "Aula i9" }
+      { hora: "17:00 - 19:00", mat: "SI2", desc: "Teoría/Práctica", aula: "Virtual" }
     ] },
     { dia: "Miércoles", eventos: [
-      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "10:00 - 12:00", mat: "ING", desc: "Inglés autodidacta" },
       { hora: "15:00 - 21:00", mat: "DMD", desc: "Teoría/Práctica", aula: "Aula i6" }
     ] },
     { dia: "Jueves", eventos: [
-      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
+      { hora: "10:00 - 12:00", mat: "BE", desc: "Bloque de estudio" },
       { hora: "15:00 - 17:00", mat: "IA", desc: "Teoría", aula: "Aula i8" },
       { hora: "17:00 - 19:00", mat: "IA", desc: "Práctica", aula: "Aula i8" }
     ] },
     { dia: "Viernes", eventos: [
+      { hora: "10:00 - 11:00", mat: "BE", desc: "Bloque de estudio" },
       { hora: "13:00 - 15:00", mat: "RED1", desc: "Redes de Computadoras I", aula: "Aula i6" },
-      { hora: "14:00", mat: "ING", desc: "Inglés autodidacta" },
       { hora: "17:00 - 19:00", mat: "EDS", desc: "Teoría", aula: "Aula i9" },
       { hora: "19:00 - 21:00", mat: "EDS", desc: "Práctica", aula: "Aula i9" }
     ] }

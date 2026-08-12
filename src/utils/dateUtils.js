@@ -61,6 +61,7 @@ const COLOR_HEX_MAP = {
   "indigo-600": "#4f46e5",
   "rose-600":   "#e11d48",
   "lime-600":   "#65a30d",
+  "yellow-500": "#eab308",
 };
 
 export const HABIT_CATEGORIES = {

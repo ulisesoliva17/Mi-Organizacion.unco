@@ -98,8 +98,8 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             ))}
           </div>
 
-          {/* Days Grid */}
-          <div className="grid grid-cols-7 gap-1 md:gap-3">
+          {/* Days Grid — capped to ~6 visible rows, scrolls internally beyond that */}
+          <div className="grid grid-cols-7 gap-1 md:gap-3 max-h-[920px] md:max-h-[1380px] overflow-y-auto pr-1">
             {emptyDays.map((_, i) => (
               <div
                 key={`empty-${i}`}
@@ -142,7 +142,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                     </button>
                   </div>
 
-                  <div className="flex flex-col gap-1 md:gap-2 flex-1">
+                  <div className="flex flex-col gap-1 md:gap-2 flex-1 overflow-y-auto">
                     {events.map((ev, j) => {
                       const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
                       return (
@@ -153,13 +153,20 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                             "text-[8px] md:text-xs leading-tight px-1 py-0.5 md:px-2 md:py-1.5 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02] truncate md:whitespace-normal",
                             !darkMode && "border-l md:border-l-4"
                           )}
-                          style={{ 
-                            backgroundColor: styles.bg, 
+                          style={{
+                            backgroundColor: styles.bg,
                             color: styles.text,
                             borderColor: styles.border
                           }}
                         >
-                          <div className="hidden md:block font-black">{ev.mat}</div>
+                          <div className="hidden md:flex items-baseline gap-1">
+                            <span className="font-black truncate">{ev.mat}</span>
+                            {ev.hora && (
+                              <span className="ml-auto shrink-0 whitespace-nowrap text-[10px] font-semibold opacity-90">
+                                {ev.hora}
+                              </span>
+                            )}
+                          </div>
                           <div className="md:whitespace-normal break-words font-semibold opacity-90 line-clamp-1 md:line-clamp-none">{ev.desc}</div>
                         </div>
                       );

@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import { getCalendarDays, getEventsForDate, formatShortDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
+import { getEventsForDate, formatShortDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
 import clsx from 'clsx';
-import { isToday, isBefore, startOfDay, parseISO as dateFnsParseISO, getDay, format, differenceInCalendarDays, addDays } from 'date-fns';
+import { isToday, isBefore, startOfDay, startOfMonth, endOfMonth, eachDayOfInterval, getDay, format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { Plus } from 'lucide-react';
 import AddTaskModal from './AddTaskModal';
 import DayDetailsModal from './DayDetailsModal';
@@ -10,32 +11,22 @@ const WEEK_DAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
 export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTask }) {
   const today = startOfDay(new Date());
-  const startDate = parseISO(data.config.fecha_inicio);
 
-  // Cover every hito in data plus a 14-day buffer after the last one (min 90 days ahead of today)
-  const allDays = useMemo(() => {
-    const lastHitoDate = data.hitos.reduce((max, h) => {
-      const d = parseISO(h.fecha);
-      return d > max ? d : max;
-    }, startDate);
-    const minEnd = addDays(today, 90);
-    const endDate = lastHitoDate > minEnd ? lastHitoDate : minEnd;
-    const numDays = differenceInCalendarDays(addDays(endDate, 14), startDate);
-    return getCalendarDays(startDate, numDays);
-  }, [startDate, data.hitos]);
-
-  // Filter: only show today and future days. Auto-updates because `today` is computed fresh each render.
+  // Strict calendar-month view: every day of the CURRENT month, nothing beyond it.
   const days = useMemo(
-    () => allDays.filter(d => !isBefore(d, today)),
+    () => eachDayOfInterval({ start: startOfMonth(today), end: endOfMonth(today) }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [allDays]
+    []
   );
+  const monthLabel = format(today, "MMMM yyyy", { locale: es });
 
-  // Pad the grid so the FIRST VISIBLE day falls on the correct weekday column (Mon=0)
-  // We compute this from the actual first displayed day (could be today if past days are hidden)
-  const firstVisibleDay = days[0];
-  const startDayOfWeek = firstVisibleDay ? (getDay(firstVisibleDay) + 6) % 7 : 0;
-  const emptyDays = Array.from({ length: startDayOfWeek });
+  // Pad the grid so day 1 falls on the right weekday column (Mon=0) and the
+  // last row is completed — a Gregorian month grid is always 4-6 rows, so
+  // this alone keeps the view compact without any extra height cap.
+  const leadingEmptyDays = Array.from({ length: (getDay(days[0]) + 6) % 7 });
+  const trailingEmptyDays = Array.from({
+    length: (7 - ((leadingEmptyDays.length + days.length) % 7)) % 7
+  });
 
   // Modal state — stores the ISO date string of the selected day
   const [modalDate, setModalDate] = useState(null);
@@ -54,7 +45,9 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
     <div className="glass-card p-4 md:p-6 flex flex-col h-full w-full">
       {/* Header + Legend */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight">Calendario</h2>
+        <h2 className="text-xl md:text-2xl font-bold tracking-tight capitalize">
+          Calendario <span className="text-slate-400 dark:text-slate-500 font-semibold">· {monthLabel}</span>
+        </h2>
 
         <div className="flex flex-wrap gap-2 md:gap-3">
           {Object.entries(data.config.materias).map(([matKey, matData]) => {
@@ -98,11 +91,11 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             ))}
           </div>
 
-          {/* Days Grid — capped to ~6 visible rows, scrolls internally beyond that */}
-          <div className="grid grid-cols-7 gap-1 md:gap-3 max-h-[920px] md:max-h-[1380px] overflow-y-auto pr-1">
-            {emptyDays.map((_, i) => (
+          {/* Days Grid — a strict calendar month, always 4-6 rows, no extra scroll needed */}
+          <div className="grid grid-cols-7 gap-1 md:gap-3">
+            {leadingEmptyDays.map((_, i) => (
               <div
-                key={`empty-${i}`}
+                key={`empty-lead-${i}`}
                 className="h-[150px] md:h-[220px] rounded-lg md:rounded-xl bg-[#DCD0B9]/60 dark:!bg-card border border-transparent"
               />
             ))}
@@ -110,6 +103,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             {days.map((day, i) => {
               const events = getEventsForDate(day, data);
               const isTodayDate = isToday(day);
+              const isPastDate = isBefore(day, today);
 
               return (
                 <div
@@ -119,7 +113,8 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                     'group h-[150px] md:h-[220px] overflow-hidden cursor-pointer border border-border rounded-lg md:rounded-xl p-1 md:p-3 flex flex-col gap-1 md:gap-2 transition-all hover:border-slate-400 dark:hover:border-slate-500 hover:shadow-sm',
                     isTodayDate
                       ? 'ring-2 ring-foreground bg-[#E3D5BE] dark:bg-slate-800/50'
-                      : 'bg-[#EAE0CB] dark:bg-slate-900'
+                      : 'bg-[#EAE0CB] dark:bg-slate-900',
+                    isPastDate && !isTodayDate && 'opacity-50 saturate-50'
                   )}
                 >
                   {/* Day header: date label + add button */}
@@ -142,7 +137,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                     </button>
                   </div>
 
-                  <div className="flex flex-col gap-1 md:gap-2 flex-1 overflow-y-auto">
+                  <div className="no-scrollbar flex flex-col gap-1 md:gap-2 flex-1 overflow-y-auto">
                     {events.map((ev, j) => {
                       const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
                       return (
@@ -175,6 +170,13 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                 </div>
               );
             })}
+
+            {trailingEmptyDays.map((_, i) => (
+              <div
+                key={`empty-trail-${i}`}
+                className="h-[150px] md:h-[220px] rounded-lg md:rounded-xl bg-[#DCD0B9]/60 dark:!bg-card border border-transparent"
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -201,8 +203,4 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
       />
     </div>
   );
-}
-
-function parseISO(dateString) {
-  return dateFnsParseISO(`${dateString}T00:00:00`);
 }

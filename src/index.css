@@ -52,6 +52,15 @@
   .glass-card {
     @apply bg-card text-card-foreground rounded-2xl border border-border shadow-sm dark:shadow-none transition-colors duration-200;
   }
+
+  /* Scrollable but no visible scrollbar — used for the event list inside a day cell */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Media Queries for Mobile Responsiveness */

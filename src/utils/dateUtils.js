@@ -1,4 +1,4 @@
-import { format, parseISO, addDays, getDay, isSameDay, isAfter, isBefore, startOfDay } from 'date-fns';
+import { format, getDay } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const CURSADA_LABELS = {};
@@ -115,15 +115,6 @@ export function getDynamicSubjectStyles(materia, data, isDarkMode) {
 export function getColorsForMateria(materia, data) {
   const hex = getMateriaHex(materia, data);
   return { hex };
-}
-
-export function getCalendarDays(startDate, numDays = 30) {
-  const days = [];
-  const start = startOfDay(startDate);
-  for (let i = 0; i < numDays; i++) {
-    days.push(addDays(start, i));
-  }
-  return days;
 }
 
 export function formatDateEs(date) {

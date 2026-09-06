@@ -39,6 +39,16 @@ export function getEventsForDate(date, data) {
   return [...fixedEvents, ...hitos];
 }
 
+// Hitos whose "tipo" marks them as high-stakes (parciales, entregas, finales,
+// and anything containing those words — reentregas, trabajos finales, etc.)
+const IMPORTANT_TIPO_KEYWORDS = ['parcial', 'entrega', 'final'];
+
+export function isImportantEvent(ev) {
+  if (!ev?.tipo) return false;
+  const tipo = ev.tipo.toLowerCase();
+  return IMPORTANT_TIPO_KEYWORDS.some(keyword => tipo.includes(keyword));
+}
+
 // Static hex color map — avoids Tailwind purging dynamic class names
 const COLOR_HEX_MAP = {
   "violet-600": "#7c3aed",

@@ -101,7 +101,42 @@ export const initialData = {
     { fecha: "2026-06-15", mat: "PCP", desc: "FERIADO - Güemes" },
     { fecha: "2026-06-16", mat: "PCP", desc: "2do TPO: COCOMO-81 y CPM (Trabajo Domiciliario, entrega hasta 19/06)" },
     { fecha: "2026-06-22", mat: "PCP", desc: "Consulta Exposición" },
-    { fecha: "2026-06-29", mat: "PCP", desc: "2da Exposición Oral de Teoría - Planificación de Proyectos" }
+    { fecha: "2026-06-29", mat: "PCP", desc: "2da Exposición Oral de Teoría - Planificación de Proyectos" },
+
+    // Cuatrimestre actual — parciales, entregas y fechas clave por materia.
+    // "Leer material práctico de Pandas", "Entrega TP3 - Parte II (EPA)" y el
+    // "Recuperatorio integral" de SI2 no tienen fecha confirmada en la fuente
+    // y quedan afuera hasta que se sepa cuándo son.
+    { fecha: "2026-09-15", mat: "RED1", tipo: "Parcial", desc: "1er Parcial" },
+
+    { fecha: "2026-09-16", mat: "DMD", tipo: "Exposición", desc: "Realizar el Trabajo Practico 3 - Parte III" },
+
+    { fecha: "2026-08-31", mat: "LBD", tipo: "Entrega y Exposición", desc: "Primer entrega y Exposición" },
+    { fecha: "2026-09-03", mat: "LBD", tipo: "Reentrega", desc: "Reentrega de to1 (TP1) (16:00 hs)" },
+    { fecha: "2026-09-07", mat: "LBD", tipo: "Clase/Actividad", desc: "Teoría de funciones procedimientos, triggers y cursores / Primer kahoot" },
+    { fecha: "2026-09-14", mat: "LBD", tipo: "Entrega y Exposición", desc: "Segunda entrega y exposición de TP2" },
+    { fecha: "2026-09-21", mat: "LBD", tipo: "Feriado", desc: "Semana del Estudiante" },
+    { fecha: "2026-10-05", mat: "LBD", tipo: "Entrega y Exposición", desc: "Tercer entrega (se debe tener la entrega 1 aprobada) y exposición de teoría del 07/09" },
+    { fecha: "2026-10-19", mat: "LBD", tipo: "Entrega", desc: "Cuarta entrega (se debe tener la entrega 2 aprobada)" },
+    { fecha: "2026-11-02", mat: "LBD", tipo: "Entrega", desc: "Quinta entrega (se debe tener la entrega 3 aprobada)" },
+    { fecha: "2026-11-16", mat: "LBD", tipo: "Entrega", desc: "Quinta entrega (se debe tener la entrega 3 aprobada)" },
+    { fecha: "2026-11-30", mat: "LBD", tipo: "Trabajo Final", desc: "Trabajo final: Exposición" },
+
+    // Feriado "Semana del estudiante" de SI2 es del 21 al 26/09 en la fuente
+    // (a diferencia del de LBD, que es solo el 21/09) — se repite un hito por
+    // cada día para que se vea toda la semana en el calendario.
+    { fecha: "2026-09-21", mat: "SI2", tipo: "Feriado", desc: "Semana del estudiante" },
+    { fecha: "2026-09-22", mat: "SI2", tipo: "Feriado", desc: "Semana del estudiante" },
+    { fecha: "2026-09-23", mat: "SI2", tipo: "Feriado", desc: "Semana del estudiante" },
+    { fecha: "2026-09-24", mat: "SI2", tipo: "Feriado", desc: "Semana del estudiante" },
+    { fecha: "2026-09-25", mat: "SI2", tipo: "Feriado", desc: "Semana del estudiante" },
+    { fecha: "2026-09-26", mat: "SI2", tipo: "Feriado", desc: "Semana del estudiante" },
+    { fecha: "2026-10-13", mat: "SI2", tipo: "Parcial", desc: "1er parcial (Unidades I, II y III)" },
+    { fecha: "2026-12-01", mat: "SI2", tipo: "Parcial", desc: "2do parcial (Unidades IV, V y VI)" },
+
+    { fecha: "2026-09-11", mat: "EDS", tipo: "Reentrega", desc: "Reentrega de trabajo" },
+
+    { fecha: "2026-09-09", mat: "ING", tipo: "Final", desc: "Examen final" }
   ],
   habitos: {
     "Deporte": false,

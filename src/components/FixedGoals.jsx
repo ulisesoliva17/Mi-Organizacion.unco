@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Target, Plus, Trash2, CalendarClock, BookOpen } from 'lucide-react';
-import { getMateriaHex } from '../utils/dateUtils';
+import { Target, Plus, Trash2, CalendarClock, BookOpen, AlertTriangle } from 'lucide-react';
+import { getMateriaHex, isImportantEvent } from '../utils/dateUtils';
 import clsx from 'clsx';
 
 // Calcula días restantes desde hoy hasta la fecha dada (positivo = futuro, 0 = hoy, negativo = pasado)
@@ -81,8 +81,21 @@ export default function FixedGoals({ data, darkMode }) {
     setGoals(prev => prev.filter(g => g.id !== id));
   };
 
+  // Parciales, entregas y finales del calendario — de solo lectura, no se guardan en localStorage
+  const autoGoals = data.hitos
+    .filter(isImportantEvent)
+    .map(hito => ({
+      id: `auto_${hito.fecha}_${hito.mat}_${hito.desc}`,
+      mat: hito.mat,
+      desc: hito.desc,
+      date: hito.fecha,
+      time: '',
+      tipo: hito.tipo,
+      isAuto: true,
+    }));
+
   // Sort: nearest deadline first, then future, then past
-  const sortedGoals = [...goals].sort((a, b) => {
+  const sortedGoals = [...autoGoals, ...goals].sort((a, b) => {
     const da = calcDaysLeft(a.date);
     const db = calcDaysLeft(b.date);
     // both future or today: sort ascending
@@ -264,13 +277,19 @@ export default function FixedGoals({ data, darkMode }) {
               <div className="flex items-start justify-between gap-2 pl-2">
                 {/* Subject + description */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 mb-0.5">
+                  <div className="flex items-center gap-1.5 mb-0.5 flex-wrap">
                     <span
                       className="text-[10px] font-black uppercase tracking-wider"
                       style={{ color: matHex }}
                     >
                       {goal.mat}
                     </span>
+                    {goal.tipo && (
+                      <span className="text-[9px] font-black uppercase tracking-wide px-1.5 py-0.5 rounded flex items-center gap-1 bg-red-500 text-white">
+                        <AlertTriangle className="w-2.5 h-2.5" />
+                        {goal.tipo}
+                      </span>
+                    )}
                     {goal.time && (
                       <span className="text-[9px] text-slate-400 dark:text-slate-500 font-medium">
                         · {goal.time}
@@ -304,14 +323,16 @@ export default function FixedGoals({ data, darkMode }) {
                 </div>
               </div>
 
-              {/* Delete button */}
-              <button
-                onClick={() => handleDelete(goal.id)}
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-400 transition-all"
-                title="Eliminar meta"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-              </button>
+              {/* Delete button — solo para metas cargadas a mano, no para las del calendario */}
+              {!goal.isAuto && (
+                <button
+                  onClick={() => handleDelete(goal.id)}
+                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-400 transition-all"
+                  title="Eliminar meta"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
           );
         })}

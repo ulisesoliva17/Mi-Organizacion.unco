@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
-import { getEventsForDate, formatShortDateEs, getMateriaHex, getDynamicSubjectStyles } from '../utils/dateUtils';
+import { getEventsForDate, formatShortDateEs, getMateriaHex, getDynamicSubjectStyles, isImportantEvent } from '../utils/dateUtils';
 import clsx from 'clsx';
 import { isToday, isBefore, startOfDay, startOfMonth, endOfMonth, eachDayOfInterval, getDay, format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { Plus } from 'lucide-react';
+import { Plus, AlertTriangle } from 'lucide-react';
 import AddTaskModal from './AddTaskModal';
 import DayDetailsModal from './DayDetailsModal';
 
@@ -140,23 +140,31 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                   <div className="no-scrollbar flex flex-col gap-1 md:gap-2 flex-1 overflow-y-auto">
                     {events.map((ev, j) => {
                       const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
+                      const important = isImportantEvent(ev);
                       return (
                         <div
                           key={j}
                           onClick={(e) => { e.stopPropagation(); onEventClick(ev); }}
                           className={clsx(
-                            "text-[8px] md:text-xs leading-tight px-1 py-0.5 md:px-2 md:py-1.5 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02] truncate md:whitespace-normal",
-                            !darkMode && "border-l md:border-l-4"
+                            "relative text-[8px] md:text-xs leading-tight px-1 py-0.5 md:px-2 md:py-1.5 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02] truncate md:whitespace-normal",
+                            important
+                              ? "border-2 border-red-500 dark:border-red-400"
+                              : !darkMode && "border-l md:border-l-4"
                           )}
                           style={{
                             backgroundColor: styles.bg,
                             color: styles.text,
-                            borderColor: styles.border
+                            borderColor: important ? undefined : styles.border
                           }}
                         >
+                          {important && (
+                            <span className="absolute -top-1 -right-1 flex items-center justify-center w-3 h-3 md:w-3.5 md:h-3.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-slate-950 shadow text-white">
+                              <AlertTriangle className="w-1.5 h-1.5 md:w-2 md:h-2" strokeWidth={3} />
+                            </span>
+                          )}
                           <div className="hidden md:flex items-baseline gap-1">
-                            <span className="font-black truncate">{ev.mat}</span>
-                            {ev.hora && (
+                            <span className="font-black truncate">{important ? `${ev.mat} · ${ev.tipo}` : ev.mat}</span>
+                            {ev.hora && ev.hora !== 'Todo el día' && (
                               <span className="ml-auto shrink-0 whitespace-nowrap text-[10px] font-semibold opacity-90">
                                 {ev.hora}
                               </span>

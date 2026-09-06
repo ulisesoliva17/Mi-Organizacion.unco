@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
-import { getEventsForDate, formatDateEs, getMateriaHex } from '../utils/dateUtils';
+import { getEventsForDate, formatDateEs, getMateriaHex, isImportantEvent } from '../utils/dateUtils';
 import { addDays, startOfDay } from 'date-fns';
-import { Calendar, Clock, MapPin } from 'lucide-react';
+import { Calendar, Clock, MapPin, AlertTriangle } from 'lucide-react';
+import clsx from 'clsx';
 
 export default function FocusToday({ data, darkMode, onEventClick }) {
   const todayDate = startOfDay(new Date());
@@ -21,27 +22,39 @@ export default function FocusToday({ data, darkMode, onEventClick }) {
     return (
       <div className="space-y-3">
         {events.map((ev, i) => {
+          const important = isImportantEvent(ev);
           return (
-            <div 
-              key={i} 
+            <div
+              key={i}
               onClick={() => onEventClick(ev)}
-              className="group flex gap-4 p-3 rounded-xl border border-border bg-card dark:bg-slate-900 shadow-sm hover:shadow-md transition-all cursor-pointer"
+              className={clsx(
+                "group flex gap-4 p-3 rounded-xl border bg-card dark:bg-slate-900 shadow-sm hover:shadow-md transition-all cursor-pointer",
+                important ? "border-red-400 dark:border-red-500 ring-1 ring-red-400/50 dark:ring-red-500/40" : "border-border"
+              )}
             >
-              <div 
-                className="w-1.5 rounded-full shrink-0" 
+              <div
+                className="w-1.5 rounded-full shrink-0"
                 style={{ backgroundColor: getMateriaHex(ev.mat, data) }}
               />
               <div className="flex-1">
-                <div className="flex justify-between items-start mb-1">
+                <div className="flex justify-between items-start mb-1 gap-2">
                   <h4 className={`font-bold text-sm transition-colors ${darkMode ? 'text-white' : 'text-black'}`}>
                     {ev.mat}
                   </h4>
-                  {ev.hora && (
-                    <span className={`text-xs font-medium px-2 py-1 rounded-md flex items-center gap-1 ${darkMode ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-600'}`}>
-                      <Clock className="w-3 h-3" />
-                      {ev.hora}
-                    </span>
-                  )}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {important && (
+                      <span className="text-[10px] font-black uppercase tracking-wide px-2 py-0.5 rounded-md flex items-center gap-1 bg-red-500 text-white">
+                        <AlertTriangle className="w-3 h-3" />
+                        {ev.tipo}
+                      </span>
+                    )}
+                    {ev.hora && ev.hora !== 'Todo el día' && (
+                      <span className={`text-xs font-medium px-2 py-1 rounded-md flex items-center gap-1 ${darkMode ? 'bg-slate-800 text-slate-200' : 'bg-slate-100 text-slate-600'}`}>
+                        <Clock className="w-3 h-3" />
+                        {ev.hora}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <p className={`text-sm font-medium ${darkMode ? 'text-white' : 'text-black'}`}>
                   {ev.desc}

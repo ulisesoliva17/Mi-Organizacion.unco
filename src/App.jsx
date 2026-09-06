@@ -29,7 +29,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300 p-2 md:p-6 lg:p-8">
-      <div className="max-w-[1600px] mx-auto space-y-4 md:space-y-6">
+      <div className="max-w-[1800px] mx-auto space-y-4 md:space-y-6">
         
         {/* Header */}
         <header className="flex items-center justify-between gap-3 glass-card px-4 py-3 md:px-6 md:py-4">

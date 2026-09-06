@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Target, Plus, Trash2, CalendarClock, BookOpen, AlertTriangle } from 'lucide-react';
+import { Plus, Trash2, CalendarClock, BookOpen, AlertTriangle } from 'lucide-react';
 import { getMateriaHex, isImportantEvent } from '../utils/dateUtils';
 import clsx from 'clsx';
 
@@ -10,6 +10,21 @@ function calcDaysLeft(dateStr) {
   const target = new Date(`${dateStr}T00:00:00`);
   const diff = Math.round((target - today) / (1000 * 60 * 60 * 24));
   return diff;
+}
+
+// Solo lo del mes en curso — y, pasado el día 25, ya se suma la primera
+// semana del mes que viene. Se aplica únicamente a lo derivado del
+// calendario; las metas cargadas a mano no se filtran por fecha.
+function isWithinAutoGoalsWindow(dateStr) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const d = new Date(`${dateStr}T00:00:00`);
+  const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+  const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  const windowEnd = today.getDate() > 25
+    ? new Date(today.getFullYear(), today.getMonth() + 1, 7)
+    : monthEnd;
+  return d >= monthStart && d <= windowEnd;
 }
 
 function formatDisplayDate(dateStr) {
@@ -84,6 +99,7 @@ export default function FixedGoals({ data, darkMode }) {
   // Parciales, entregas y finales del calendario — de solo lectura, no se guardan en localStorage
   const autoGoals = data.hitos
     .filter(isImportantEvent)
+    .filter(hito => isWithinAutoGoalsWindow(hito.fecha))
     .map(hito => ({
       id: `auto_${hito.fecha}_${hito.mat}_${hito.desc}`,
       mat: hito.mat,
@@ -120,7 +136,7 @@ export default function FixedGoals({ data, darkMode }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold tracking-tight dark:text-white flex items-center gap-2">
-            <Target className="w-5 h-5 text-violet-500 shrink-0" />
+            <span className="text-xl leading-none shrink-0" role="img" aria-label="Arco y flecha">🏹</span>
             Metas Fijas
           </h2>
           <p className="text-xs text-slate-400 dark:text-slate-300 font-medium mt-0.5">

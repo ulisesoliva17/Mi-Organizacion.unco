@@ -104,11 +104,12 @@ export const initialData = {
     { fecha: "2026-06-29", mat: "PCP", desc: "2da Exposición Oral de Teoría - Planificación de Proyectos" },
 
     // Cuatrimestre actual — parciales, entregas y fechas clave por materia.
-    // "Leer material práctico de Pandas", "Entrega TP3 - Parte II (EPA)" y el
-    // "Recuperatorio integral" de SI2 no tienen fecha confirmada en la fuente
-    // y quedan afuera hasta que se sepa cuándo son.
+    // "Leer material práctico de Pandas" (DMD) y el "Recuperatorio integral"
+    // de SI2 siguen sin fecha confirmada y quedan afuera hasta que se sepa
+    // cuándo son.
     { fecha: "2026-09-15", mat: "RED1", tipo: "Parcial", desc: "1er Parcial" },
 
+    { fecha: "2026-09-16", mat: "DMD", tipo: "Entrega", desc: "Realizar y entregar Trabajo Practico 3 - Parte II (Del curso de EPA)" },
     { fecha: "2026-09-16", mat: "DMD", tipo: "Exposición", desc: "Realizar el Trabajo Practico 3 - Parte III" },
 
     { fecha: "2026-08-31", mat: "LBD", tipo: "Entrega y Exposición", desc: "Primer entrega y Exposición" },

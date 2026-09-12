@@ -32,7 +32,7 @@ export default function FocusToday({ data, darkMode, onEventClick }) {
               key={i}
               onClick={() => onEventClick(ev)}
               className={clsx(
-                "group flex gap-4 p-3 rounded-xl border bg-card dark:bg-slate-900 shadow-sm hover:shadow-md transition-all cursor-pointer",
+                "group flex gap-4 p-3 rounded-xl border bg-card dark:bg-card shadow-sm hover:shadow-md transition-all cursor-pointer",
                 important ? "border-red-400 dark:border-red-500 ring-1 ring-red-400/50 dark:ring-red-500/40" : "border-border"
               )}
             >
@@ -80,7 +80,7 @@ export default function FocusToday({ data, darkMode, onEventClick }) {
   return (
     <div className="glass-card p-4 md:p-6 h-full flex flex-col">
       <div className="flex flex-col items-center justify-center gap-2 mb-8 text-center">
-        <div className="p-3 bg-foreground text-background rounded-full shadow-md">
+        <div className="p-3 bg-foreground text-background dark:bg-black dark:text-[#EDFF21] rounded-full shadow-md">
           <Calendar className="w-6 h-6" />
         </div>
         <h2 className="text-2xl font-bold tracking-tight uppercase">Foco Hoy</h2>

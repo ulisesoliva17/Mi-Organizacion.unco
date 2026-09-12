@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Trash2, CalendarClock, BookOpen, AlertTriangle } from 'lucide-react';
+import { Target, Plus, Trash2, CalendarClock, BookOpen, AlertTriangle } from 'lucide-react';
 import { getMateriaHex, isImportantEvent } from '../utils/dateUtils';
 import clsx from 'clsx';
 
@@ -34,6 +34,7 @@ function formatDisplayDate(dateStr) {
 }
 
 const LS_KEY = 'uncoApp_metas_fijas';
+const DISMISSED_AUTO_LS_KEY = 'uncoApp_metas_fijas_dismissed_auto';
 
 function loadGoals() {
   try {
@@ -47,8 +48,23 @@ function saveGoals(goals) {
   localStorage.setItem(LS_KEY, JSON.stringify(goals));
 }
 
+function loadDismissedAuto() {
+  try {
+    const stored = localStorage.getItem(DISMISSED_AUTO_LS_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch (_) { /* ignore */ }
+  return [];
+}
+
+function saveDismissedAuto(ids) {
+  localStorage.setItem(DISMISSED_AUTO_LS_KEY, JSON.stringify(ids));
+}
+
 export default function FixedGoals({ data, darkMode }) {
   const [goals, setGoals] = useState(loadGoals);
+  // Ids de eventos del calendario que el usuario ya sacó de la vista
+  // (no borra el hito real, solo lo oculta de Metas Fijas)
+  const [dismissedAutoIds, setDismissedAutoIds] = useState(loadDismissedAuto);
   const [showForm, setShowForm] = useState(false);
   const [desc, setDesc] = useState('');
   const [selectedMat, setSelectedMat] = useState('');
@@ -59,6 +75,10 @@ export default function FixedGoals({ data, darkMode }) {
   useEffect(() => {
     saveGoals(goals);
   }, [goals]);
+
+  useEffect(() => {
+    saveDismissedAuto(dismissedAutoIds);
+  }, [dismissedAutoIds]);
 
   // Subjects from config
   const subjects = Object.entries(data.config.materias).map(([key, mat]) => ({
@@ -96,7 +116,12 @@ export default function FixedGoals({ data, darkMode }) {
     setGoals(prev => prev.filter(g => g.id !== id));
   };
 
+  const handleDismissAuto = (id) => {
+    setDismissedAutoIds(prev => [...prev, id]);
+  };
+
   // Parciales, entregas y finales del calendario — de solo lectura, no se guardan en localStorage
+  // (salvo la lista de "descartados", que solo oculta el ítem de esta vista)
   const autoGoals = data.hitos
     .filter(isImportantEvent)
     .filter(hito => isWithinAutoGoalsWindow(hito.fecha))
@@ -108,7 +133,8 @@ export default function FixedGoals({ data, darkMode }) {
       time: '',
       tipo: hito.tipo,
       isAuto: true,
-    }));
+    }))
+    .filter(g => !dismissedAutoIds.includes(g.id));
 
   // Sort: nearest deadline first, then future, then past
   const sortedGoals = [...autoGoals, ...goals].sort((a, b) => {
@@ -136,7 +162,7 @@ export default function FixedGoals({ data, darkMode }) {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold tracking-tight dark:text-white flex items-center gap-2">
-            <span className="text-xl leading-none shrink-0" role="img" aria-label="Arco y flecha">🏹</span>
+            <Target className="w-5 h-5 text-violet-500 dark:text-[#EDFF21] shrink-0" />
             Metas Fijas
           </h2>
           <p className="text-xs text-slate-400 dark:text-slate-300 font-medium mt-0.5">
@@ -280,8 +306,8 @@ export default function FixedGoals({ data, darkMode }) {
               className={clsx(
                 "group relative flex flex-col gap-1.5 px-3 py-2.5 rounded-xl border transition-all",
                 isPast
-                  ? "opacity-50 bg-slate-50/50 dark:bg-slate-900/20 border-transparent"
-                  : "bg-card dark:bg-slate-900/40 border-border hover:border-slate-300 dark:hover:border-slate-600"
+                  ? "opacity-50 bg-slate-50/50 dark:bg-white/[0.02] border-transparent"
+                  : "bg-card dark:bg-white/[0.03] border-border hover:border-slate-300 dark:hover:border-[#EDFF21] dark:hover:shadow-[0_0_14px_-3px_rgba(237,255,33,0.45)]"
               )}
             >
               {/* Left color bar */}
@@ -329,20 +355,21 @@ export default function FixedGoals({ data, darkMode }) {
                 <div className={clsx(
                   "flex flex-col items-center shrink-0 px-2 py-1.5 rounded-lg border text-center min-w-[44px]",
                   isPast
-                    ? "bg-slate-100/60 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700"
-                    : daysBg
+                    ? "bg-slate-100/60 dark:bg-white/[0.03] border-slate-200 dark:border-white/10"
+                    : clsx(daysBg, "dark:!bg-[#EDFF21]/10 dark:!border-[#EDFF21]")
                 )}>
-                  <BookOpen className={clsx("w-3 h-3 mb-0.5", daysColor)} />
-                  <span className={clsx("text-[11px] font-black leading-none", daysColor)}>
+                  <BookOpen className={clsx("w-3 h-3 mb-0.5", daysColor, !isPast && "dark:!text-[#EDFF21]")} />
+                  <span className={clsx("text-[11px] font-black leading-none", daysColor, !isPast && "dark:!text-[#EDFF21]")}>
                     {daysText}
                   </span>
                 </div>
               </div>
 
-              {/* Delete button — solo para metas cargadas a mano, no para las del calendario */}
-              {!goal.isAuto && (
+              {/* Delete button — las metas a mano se pueden borrar siempre; las del
+                  calendario, solo una vez que ya pasaron (no se editan desde acá) */}
+              {(!goal.isAuto || isPast) && (
                 <button
-                  onClick={() => handleDelete(goal.id)}
+                  onClick={() => (goal.isAuto ? handleDismissAuto(goal.id) : handleDelete(goal.id))}
                   className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-400 transition-all"
                   title="Eliminar meta"
                 >

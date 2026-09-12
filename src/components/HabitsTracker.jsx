@@ -43,24 +43,13 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
         <p className="text-xs text-slate-400 dark:text-white font-medium">Tachá lo que completaste hoy</p>
       </div>
 
-      {/* Legend - Fixed Colors */}
-      <div className="flex flex-wrap gap-x-4 gap-y-2 px-1 py-1 border-b border-border/50">
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white">
-          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#38bdf8' }}></span>
-          Limpieza
-        </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-white">
-          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#f97316' }}></span>
-          Deporte
-        </div>
-      </div>
-
       {/* Generate button */}
       <button
         onClick={handleGenerate}
         className={clsx(
           "w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-200 shadow-md",
           "bg-gradient-to-br from-violet-600 to-blue-600 text-white hover:from-violet-500 hover:to-blue-500 hover:shadow-lg active:scale-95",
+          "dark:bg-none dark:bg-[#EDFF21] dark:text-black dark:hover:bg-[#f5ff54]",
           animating ? 'scale-95 opacity-80' : 'scale-100 opacity-100'
         )}
       >
@@ -92,7 +81,7 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
                 "group flex items-start gap-3 px-3 py-2.5 rounded-xl border transition-all cursor-pointer",
                 habit.done
                   ? 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800'
-                  : 'bg-card dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800 border-border'
+                  : 'bg-card dark:bg-white/[0.03] hover:bg-slate-100 dark:hover:bg-white/[0.06] border-border'
               )}
             >
               {/* Category indicator bar */}
@@ -171,7 +160,7 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
               className={clsx(
                 "px-2 py-0.5 rounded-full text-[10px] font-bold border transition-all uppercase tracking-tight flex items-center gap-1.5",
                 selectedCategory === cat.key 
-                  ? "bg-slate-100 dark:bg-slate-800 border-slate-400 dark:border-slate-500 text-slate-900 dark:text-white scale-105" 
+                  ? "bg-slate-100 dark:bg-white/10 border-slate-400 dark:border-white/20 text-slate-900 dark:text-white scale-105"
                   : "bg-transparent border-transparent text-slate-400 dark:text-slate-300 hover:text-slate-500 dark:hover:text-white"
               )}
             >

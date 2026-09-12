@@ -30,11 +30,11 @@
   }
 
   .dark {
-    --background: #020617;
+    --background: #000000;
     --foreground: #f8fafc;
-    --card: #0f172a;
+    --card: #080808;
     --card-foreground: #f8fafc;
-    --border: #1e293b;
+    --border: #111111;
   }
 
   body {

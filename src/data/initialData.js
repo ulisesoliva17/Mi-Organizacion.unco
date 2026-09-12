@@ -137,7 +137,16 @@ export const initialData = {
 
     { fecha: "2026-09-11", mat: "EDS", tipo: "Reentrega", desc: "Reentrega de trabajo" },
 
-    { fecha: "2026-09-09", mat: "ING", tipo: "Final", desc: "Examen final" }
+    { fecha: "2026-09-09", mat: "ING", tipo: "Final", desc: "Examen final" },
+
+    { fecha: "2026-08-13", mat: "IA", tipo: "Actividad", desc: "Actividad Test de Turing. Introducción a la IA Definiciones según Russell& Norvig. Test de turing" },
+    { fecha: "2026-09-24", mat: "IA", tipo: "Sin Clases", desc: "Sin Clases" },
+    { fecha: "2026-10-15", mat: "IA", tipo: "Actividad / Evaluación", desc: "Actividad 1 Evaluación CSP" },
+    { fecha: "2026-10-29", mat: "IA", tipo: "Parcial", desc: "Parcial 1: Evaluación Unidades 1, 2, 3 y 4" },
+    { fecha: "2026-11-12", mat: "IA", tipo: "Práctica", desc: "Práctica" },
+    { fecha: "2026-11-19", mat: "IA", tipo: "Parcial", desc: "Parcial 2: Evaluación Unidades 5 y 6" },
+    { fecha: "2026-11-26", mat: "IA", tipo: "Parcial", desc: "Parcial 2: Evaluación Unidades 5 y 6" },
+    { fecha: "2026-12-03", mat: "IA", tipo: "Recuperatorio", desc: "Recuperatorio Integral: Evaluación Unidades 1 a 6" }
   ],
   habitos: {
     "Deporte": false,

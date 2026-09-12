@@ -40,9 +40,9 @@ export function getEventsForDate(date, data) {
 }
 
 // Hitos whose "tipo" marks them as high-stakes (parciales, entregas, finales,
-// exposiciones, y cualquier variante que contenga esas palabras — reentregas,
-// trabajos finales, entrega y exposición, etc.)
-const IMPORTANT_TIPO_KEYWORDS = ['parcial', 'entrega', 'final', 'exposición'];
+// exposiciones, recuperatorios, y cualquier variante que contenga esas
+// palabras — reentregas, trabajos finales, entrega y exposición, etc.)
+const IMPORTANT_TIPO_KEYWORDS = ['parcial', 'entrega', 'final', 'exposición', 'recuperatorio'];
 
 export function isImportantEvent(ev) {
   if (!ev?.tipo) return false;

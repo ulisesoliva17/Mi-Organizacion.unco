@@ -11,8 +11,12 @@ export default function FocusToday({ data, darkMode, onEventClick }) {
   const effectiveToday = todayDate < minDate ? minDate : todayDate;
   const tomorrowDate = addDays(effectiveToday, 1);
 
-  const todayEvents = useMemo(() => getEventsForDate(effectiveToday, data), [effectiveToday, data]);
-  const tomorrowEvents = useMemo(() => getEventsForDate(tomorrowDate, data), [tomorrowDate, data]);
+  // Critical events (Parcial/Entrega/Final/Exposición/Recuperatorio) float to the top
+  const sortByPriority = (events) => [...events].sort(
+    (a, b) => Number(isImportantEvent(b)) - Number(isImportantEvent(a))
+  );
+  const todayEvents = useMemo(() => sortByPriority(getEventsForDate(effectiveToday, data)), [effectiveToday, data]);
+  const tomorrowEvents = useMemo(() => sortByPriority(getEventsForDate(tomorrowDate, data)), [tomorrowDate, data]);
 
   const renderEventList = (events) => {
     if (events.length === 0) {

@@ -44,10 +44,14 @@ export function getEventsForDate(date, data) {
 // palabras — reentregas, trabajos finales, entrega y exposición, etc.)
 const IMPORTANT_TIPO_KEYWORDS = ['parcial', 'entrega', 'final', 'exposición', 'recuperatorio'];
 
+// Checks both "tipo" and the event's title/description, so a fixed weekly
+// class would also get flagged if its own name ever contained one of these
+// words (today none do, but it keeps this the single source of truth for
+// both the visual highlight and the priority sort in the calendar).
 export function isImportantEvent(ev) {
-  if (!ev?.tipo) return false;
-  const tipo = ev.tipo.toLowerCase();
-  return IMPORTANT_TIPO_KEYWORDS.some(keyword => tipo.includes(keyword));
+  if (!ev) return false;
+  const haystack = `${ev.tipo || ''} ${ev.desc || ''}`.toLowerCase();
+  return IMPORTANT_TIPO_KEYWORDS.some(keyword => haystack.includes(keyword));
 }
 
 // Static hex color map — avoids Tailwind purging dynamic class names

@@ -39,7 +39,7 @@ export default function HabitsTracker({ data, darkMode, onToggleHabit, onAddHabi
     <div className="glass-card p-4 md:p-5 flex flex-col gap-4 h-full">
       {/* Header */}
       <div>
-        <h2 className="text-xl font-bold tracking-tight mb-0.5 dark:text-white">Hábitos</h2>
+        <h2 className="text-xl font-bold tracking-tight mb-0.5 dark:text-white">Bandeja de hoy</h2>
         <p className="text-xs text-slate-400 dark:text-white font-medium">Tachá lo que completaste hoy</p>
       </div>
 

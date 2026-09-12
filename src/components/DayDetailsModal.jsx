@@ -5,7 +5,10 @@ import clsx from 'clsx';
 export default function DayDetailsModal({ isOpen, date, onClose, data, darkMode, onEventClick, onAddTask }) {
   if (!isOpen || !date) return null;
 
-  const events = getEventsForDate(date, data);
+  // Critical events (Parcial/Entrega/Final/Exposición/Recuperatorio) float to the top
+  const events = [...getEventsForDate(date, data)].sort(
+    (a, b) => Number(isImportantEvent(b)) - Number(isImportantEvent(a))
+  );
 
   const handleEventClick = (ev) => {
     onClose();

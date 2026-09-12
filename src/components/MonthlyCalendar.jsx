@@ -101,7 +101,11 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
             ))}
 
             {days.map((day, i) => {
-              const events = getEventsForDate(day, data);
+              // Critical events (Parcial/Entrega/Final/Exposición/Recuperatorio)
+              // float to the top; the rest keep their original relative order.
+              const events = [...getEventsForDate(day, data)].sort(
+                (a, b) => Number(isImportantEvent(b)) - Number(isImportantEvent(a))
+              );
               const isTodayDate = isToday(day);
               const isPastDate = isBefore(day, today);
 
@@ -117,10 +121,17 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                     isPastDate && !isTodayDate && 'opacity-50 saturate-50'
                   )}
                 >
-                  {/* Day header: date label + add button */}
+                  {/* Day header: date label + task counter + add button */}
                   <div className="flex items-center justify-between">
-                    <div className="text-[10px] md:text-base font-bold text-slate-500 dark:text-slate-300">
-                      {formatShortDateEs(day)}
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="text-[10px] md:text-base font-bold text-slate-500 dark:text-slate-300 truncate">
+                        {formatShortDateEs(day)}
+                      </span>
+                      {events.length > 0 && (
+                        <span className="shrink-0 px-1.5 py-[1px] rounded-full text-[8px] md:text-[10px] font-bold bg-slate-200/70 text-slate-500 dark:bg-slate-700/70 dark:text-amber-300">
+                          {events.length}
+                        </span>
+                      )}
                     </div>
                     {/* + button – always visible on today, hover on others or touch on mobile */}
                     <button
@@ -137,7 +148,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                     </button>
                   </div>
 
-                  <div className="no-scrollbar flex flex-col gap-1.5 md:gap-2.5 flex-1 overflow-y-auto">
+                  <div className="no-scrollbar flex flex-col gap-1.5 md:gap-2.5 flex-1 overflow-hidden group-hover:overflow-y-auto">
                     {events.map((ev, j) => {
                       const styles = getDynamicSubjectStyles(ev.mat, data, darkMode);
                       const important = isImportantEvent(ev);
@@ -146,7 +157,7 @@ export default function MonthlyCalendar({ data, darkMode, onEventClick, onAddTas
                           key={j}
                           onClick={(e) => { e.stopPropagation(); onEventClick(ev); }}
                           className={clsx(
-                            "relative text-[9px] md:text-sm leading-tight px-1.5 py-1 md:px-2.5 md:py-2 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02] truncate md:whitespace-normal",
+                            "relative shrink-0 text-[9px] md:text-sm leading-tight px-1.5 py-1 md:px-2.5 md:py-2 rounded-md cursor-pointer font-bold shadow-sm transition-transform hover:scale-[1.02] truncate md:whitespace-normal",
                             important
                               ? "border-2 border-red-500 dark:border-red-400"
                               : !darkMode && "border-l md:border-l-4"

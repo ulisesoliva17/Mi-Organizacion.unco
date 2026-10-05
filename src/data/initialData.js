@@ -117,10 +117,10 @@ export const initialData = {
     { fecha: "2026-09-07", mat: "LBD", tipo: "Clase/Actividad", desc: "Teoría de funciones procedimientos, triggers y cursores / Primer kahoot" },
     { fecha: "2026-09-14", mat: "LBD", tipo: "Entrega y Exposición", desc: "Segunda entrega y exposición de TP2" },
     { fecha: "2026-09-21", mat: "LBD", tipo: "Feriado", desc: "Semana del Estudiante" },
-    { fecha: "2026-10-05", mat: "LBD", tipo: "Entrega y Exposición", desc: "Tercer entrega (se debe tener la entrega 1 aprobada) y exposición de teoría del 07/09" },
-    { fecha: "2026-10-19", mat: "LBD", tipo: "Entrega", desc: "Cuarta entrega (se debe tener la entrega 2 aprobada)" },
-    { fecha: "2026-11-02", mat: "LBD", tipo: "Entrega", desc: "Quinta entrega (se debe tener la entrega 3 aprobada)" },
-    { fecha: "2026-11-16", mat: "LBD", tipo: "Entrega", desc: "Quinta entrega (se debe tener la entrega 3 aprobada)" },
+    { fecha: "2026-10-05", mat: "LBD", tipo: "Entrega y Exposición", desc: "Tercer entrega" },
+    { fecha: "2026-10-19", mat: "LBD", tipo: "Entrega", desc: "Cuarta entrega" },
+    { fecha: "2026-11-02", mat: "LBD", tipo: "Entrega", desc: "Quinta entrega" },
+    { fecha: "2026-11-16", mat: "LBD", tipo: "Entrega", desc: "Quinta entrega" },
     { fecha: "2026-11-30", mat: "LBD", tipo: "Trabajo Final", desc: "Trabajo final: Exposición" },
 
     // Feriado "Semana del estudiante" de SI2 es del 21 al 26/09 en la fuente

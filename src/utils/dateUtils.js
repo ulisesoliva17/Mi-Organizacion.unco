@@ -40,9 +40,9 @@ export function getEventsForDate(date, data) {
 }
 
 // Hitos whose "tipo" marks them as high-stakes (parciales, entregas, finales,
-// exposiciones, recuperatorios, y cualquier variante que contenga esas
-// palabras — reentregas, trabajos finales, entrega y exposición, etc.)
-const IMPORTANT_TIPO_KEYWORDS = ['parcial', 'entrega', 'final', 'exposición', 'recuperatorio'];
+// exposiciones, recuperatorios, evaluaciones y trabajos de entrega, y cualquier
+// variante que contenga esas palabras — reentregas, trabajos finales, etc.)
+const IMPORTANT_TIPO_KEYWORDS = ['parcial', 'entrega', 'final', 'exposición', 'recuperatorio', 'evaluaci', 'evaluativ', 'trabajo'];
 
 // Checks both "tipo" and the event's title/description, so a fixed weekly
 // class would also get flagged if its own name ever contained one of these

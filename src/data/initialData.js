@@ -143,6 +143,10 @@ export const initialData = {
     { fecha: "2026-09-24", mat: "IA", tipo: "Sin Clases", desc: "Sin Clases" },
     { fecha: "2026-10-15", mat: "IA", tipo: "Actividad / Evaluación", desc: "Actividad 1 Evaluación CSP" },
     { fecha: "2026-10-29", mat: "IA", tipo: "Parcial", desc: "Parcial 1: Evaluación Unidades 1, 2, 3 y 4" },
+
+    { fecha: "2026-10-14", mat: "DMD", tipo: "Exposición", desc: "Exposición práctico (TP2 ejercicios 1-3)" },
+    { fecha: "2026-10-21", mat: "BE", tipo: "Final", desc: "Lógica para Ciencias de la Computación – Final (1ra instancia)" },
+    { fecha: "2026-11-04", mat: "DMD", tipo: "Exposición", desc: "Exposición práctico (TP2 ejercicio 4)" },
     { fecha: "2026-11-12", mat: "IA", tipo: "Práctica", desc: "Práctica" },
     { fecha: "2026-11-19", mat: "IA", tipo: "Parcial", desc: "Parcial 2: Evaluación Unidades 5 y 6" },
     { fecha: "2026-11-26", mat: "IA", tipo: "Parcial", desc: "Parcial 2: Evaluación Unidades 5 y 6" },

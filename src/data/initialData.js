@@ -1,5 +1,5 @@
 export const initialData = {
-  dataVersion: 3,
+  dataVersion: 4,
   config: {
     fecha_inicio: "2026-04-20",
     materias: {

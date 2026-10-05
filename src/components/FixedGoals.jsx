@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Target, Plus, Trash2, CalendarClock, BookOpen, AlertTriangle } from 'lucide-react';
+import { Target, Plus, Trash2, CalendarClock, BookOpen } from 'lucide-react';
 import { getMateriaHex, isImportantEvent } from '../utils/dateUtils';
 import clsx from 'clsx';
 
@@ -327,8 +327,7 @@ export default function FixedGoals({ data, darkMode }) {
                       {goal.mat}
                     </span>
                     {goal.tipo && (
-                      <span className="text-[9px] font-black uppercase tracking-wide px-1.5 py-0.5 rounded flex items-center gap-1 bg-red-500 text-white">
-                        <AlertTriangle className="w-2.5 h-2.5" />
+                      <span className="text-[9px] font-black uppercase tracking-wide px-1.5 py-0.5 rounded bg-red-500 text-white">
                         {goal.tipo}
                       </span>
                     )}

@@ -1,4 +1,4 @@
-import { X, Clock, MapPin, Plus, AlertTriangle } from 'lucide-react';
+import { X, Clock, MapPin, Plus } from 'lucide-react';
 import { getEventsForDate, formatShortDateEs, getDynamicSubjectStyles, isImportantEvent } from '../utils/dateUtils';
 import clsx from 'clsx';
 
@@ -70,8 +70,7 @@ export default function DayDetailsModal({ isOpen, date, onClose, data, darkMode,
                       </h4>
                       <div className="flex items-center gap-1.5 shrink-0">
                         {important && (
-                          <span className="text-[10px] font-black uppercase tracking-wide px-2 py-0.5 rounded-md flex items-center gap-1 bg-red-500 text-white">
-                            <AlertTriangle className="w-3 h-3" />
+                          <span className="text-[10px] font-black uppercase tracking-wide px-2 py-0.5 rounded-md bg-red-500 text-white">
                             {ev.tipo}
                           </span>
                         )}
